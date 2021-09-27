@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+<style>
+
+
+
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('../images/tournament.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+ 	
+ 	table, tbody, tr, th, td{
+ 	 background: rgba(100, 100, 100, 0.3) !important;
+ 	
+ 	
+ 	}
+ 	
+ 		table{
+ 	margin-top:5%;
+ 	
+ 	
+ 	}
+ 	
+ thead{
+ 
+  background: rgba(100, 100, 100, 1) !important;
+ }
+ 	
+ 	
+ 	a{
+ 	color:white;
+ 	}
+ 	 		.sticky+.content {
+	padding-top: 56px;
+}	
+ 	
+ 		</style>
+</head>
+<body>
+
+
+<header class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+
+
+
+<div class="container content table-responsive" >
+
+  
+
+
+            <table class="table table-dark" id="tourTable">
+  <thead>
+    <tr>
+    
+      <th scope="col">Име</th>
+      <th scope="col">Организатор</th>
+      <th scope="col">Крайна дата</th>
+       <th scope="col">Статус</th>
+       <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Опции</th>
+      
+    </tr>
+  </thead>
+  <tbody id="rowAdd" >
+  <tr th:each="tournament : ${tournaments}" >
+   <td><a th:text="${tournament.name}" th:href="@{'/info/tournamentInfo?tournament=' + ${tournament.id}}"></a></td>
+   <td><p th:text="${tournament.hostName}"></p></td>
+    
+        <td><p th:text="${tournament.endDate}"></p></td>
+        <td><p th:text="${tournament.status}"></p></td>
+      <td sec:authorize="hasRole('ROLE_ADMIN')" >
+      <button class="btn" th:if="${tournament.status == 'Затворен'}"  th:onclick="'tournamentRewardDistribute(' + ${tournament.id} + ')'"><i class="fas fa-trophy"></i>
+
+      Награждаване
+      </button>
+     <span th:unless="${tournament.status == 'Затворен'}">Няма</span>
+      </td>
+   </tr>
+   
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+<script>
+
+
+	
+	
+
+
+
+</script>
+
+
+
+<script src="/js/browseTournaments.js"></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	 	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+
+<style>
+
+
+
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('/images/fileCabinet.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+
+
+ 	h2,p{
+
+	margin: auto;
+	color:white;
+}
+.form-group {
+margin: auto;
+}
+
+.container{
+text-align:center;
+	
+}
+
+table{
+
+margin-top:5%;
+}
+		.sticky+.content {
+	padding-top: 56px;
+}
+</style>
+
+
+
+
+</head>
+<body>
+
+
+<header id="header" class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+
+
+
+<div class="container content">
+
+  <h2>Потребителски предложения</h2>
+  <p>Изберете критерии за търсене.</p>
+        <form  class="form-inline"   action="" id="ajaxForm">
+        
+            <div class="form-group">
+              <select   class="form-control" id="water">
+                <option value=""selected hidden>Изберете вида на предложенията...</option>
+              <option value="FTWP">Предложения за добавяне на риба към водоем</option>
+                 <option value="FP">Предложения за добавяне нов вид риба</option>
+                 <option value="WP">Предложения за добавяне на нов водоем</option>
+        </select>
+           
+             </div>
+            
+            
+      
+         
+         
+         
+            
+            
+            
+            
+            
+
+            
+        </form>
+        
+
+
+
+
+
+<div   class="table-responsive" id="fishTable"  style="display: none">
+<table class="table table-dark" >
+          
+   <thead>
+    <tr>
+     
+      <th scope="col">FishName</th>
+      <th scope="col">MaxSize</th>
+       <th scope="col">MaxWeight</th>
+          <th scope="col">Picture</th>
+       <th scope="col">Info</th>
+       <th scope="col">Options</th>
+      
+    </tr>
+  </thead>
+  <tbody id="rowAdd1">
+  <tr th:each="fish : ${fishProps}">
+   
+   <td><p th:text="${fish.name}"></p></td>
+     <td><p th:text="${fish.maxSize}"></p></td>
+        <td><p th:text="${fish.maxWeight}"></p></td>
+    <td><img th:src="${fish.path}" class="img-responsive" style="width:100%;" alt="..."></td>
+      <td><p th:text="${fish.info}"></p></td>
+         <td>
+      <button class="btn" th:onclick="'removeProposalFish(' + ${fish.id} + ')'"><i class="fa fa-trash"></i> Отхвърляне</button>
+      <button class="btn" th:onclick="'acceptProposalFish(' + ${fish.id} + ')'"><i class="fas fa-edit"></i> Приемане</button>
+      </td>
+   </tr>
+   
+  </tbody>
+</table>
+
+</div>
+
+
+
+<div class="table-responsive" id="fishToWaterTable"  style="display: none">
+
+<table  class="table table-dark" >
+         
+  <thead>
+    <tr>
+     
+      <th scope="col">Водоем</th>
+      <th scope="col">Риба</th>
+       <th scope="col">Информация</th>
+       <th scope="col">Опции</th>
+      
+      
+    </tr>
+  </thead>
+  <tbody id="rowAdd">
+   <tr th:each="fishToWater : ${fishToWaterProps}">
+
+   <td><p th:text="${fishToWater.waters.name}"></p></td>
+     <td><p th:text="${fishToWater.fishes.name}"></p></td>
+      <td><p th:text="${fishToWater.info}"></p></td>
+         <td>
+      <button class="btn" th:onclick="'removeProposalFTW(' + ${fishToWater.id} + ')'"><i class="fa fa-trash"></i> Отхвърляне</button>
+      <button class="btn" th:onclick="'acceptProposalFTW(' + ${fishToWater.id} + ')'"><i class="fas fa-edit"></i> Приемане</button>
+      </td>
+      
+   </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div class="table-responsive" id="waterTable" style="display: none">
+<table  class="table table-dark" >
+         
+  <thead>
+    <tr>
+     
+      <th scope="col">WaterName</th>
+      <th scope="col">Long</th>
+       <th scope="col">Lat</th>
+        <th scope="col">Picture</th>
+      <th scope="col">Info</th>
+       <th scope="col">Options</th>
+      
+      
+    </tr>
+  </thead>
+  <tbody id="rowAdd2" >
+     <tr id="waterTableRow" th:each="water : ${waterProps}">
+   
+   <td><p th:text="${water.name}"></p></td>
+     <td><p th:text="${water.longtitude}"></p></td>
+        <td><p th:text="${water.latitude}"></p></td>
+        <td><img th:src="${water.path}" class="img-responsive" style="width:100%;" alt="..."></td>
+      <td><p th:text="${water.info}"></p></td>
+      <td>
+      <button class="btn" th:onclick="'removeProposalWater(' + ${water.id} + ')'"><i class="fa fa-trash"></i> Отхвърляне</button>
+      <button class="btn" th:onclick="'acceptProposalWater(' + ${water.id} + ')'"><i class="fas fa-edit"></i> Приемане</button>
+      </td>
+  </tbody>
+</table>
+
+</div>
+
+
+    </div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+    jQuery('#ajaxForm').submit( function(e){ 
+    e.preventDefault();
+});
+      $("#water").change(function() {
+    	  changeBrowse();
+    });
+   
+   
+      $(document).ready(function () {
+    	    
+    	   
+    	   
+          var token = $("meta[name='_csrf']").attr("content");
+          var header = $("meta[name='_csrf_header']").attr("content");
+
+
+          $(document).ajaxSend(function(e, xhr, options) {
+              xhr.setRequestHeader(header, token);
+          });
+         
+    });
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+function changeBrowse() {
+    var water = $("#water").val();
+    
+switch(water){
+
+case("FTWP"):
+document.getElementById("fishToWaterTable").style.display = "block";
+document.getElementById("fishTable").style.display = "none";
+document.getElementById("waterTable").style.display = "none";
+break;
+	
+case("WP"):
+document.getElementById("fishTable").style.display = "none";
+document.getElementById("fishToWaterTable").style.display = "none";
+document.getElementById("waterTable").style.display = "block";
+break;
+
+case("FP"):
+document.getElementById("waterTable").style.display = "none";
+document.getElementById("fishTable").style.display = "block";
+document.getElementById("fishToWaterTable").style.display = "none";
+break;
+}
+    
+    
+  
+};
+
+
+       
+       
+       
+       
+       
+       
+function removeProposalFTW(id){
+	
+	$.ajax({
+	    type : "DELETE",
+	    url : "/admin/proposals/removeProposalFTW",
+	    data: {"id" : id},
+	    
+
+	    success: function (fragment) {       
+	   	 $("#fishToWaterTable").replaceWith(fragment);
+		 document.getElementById("fishToWaterTable").style.display = "block";
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+
+
+}
+
+
+function acceptProposalFTW(id){
+	
+	$.ajax({
+	    type : "POST",
+	    url : "/admin/proposals/acceptProposalFTW",
+	    data: {"id" : id},
+	    
+
+	    success: function (fragment) {       
+		   	 $("#fishToWaterTable").replaceWith(fragment);
+			 document.getElementById("fishToWaterTable").style.display = "block";
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+
+	
+	
+}
+
+
+function removeProposalFish(id){
+	
+	$.ajax({
+	    type : "DELETE",
+	    url : "/admin/proposals/removeProposalFish",
+	    data: {"id" : id},
+	    
+
+	    success: function (fragment) {       
+	   	 $("#fishTable").replaceWith(fragment);
+		 document.getElementById("fishTable").style.display = "block";
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+
+
+}
+
+
+function acceptProposalFish(id){
+	
+	$.ajax({
+	    type : "POST",
+	    url : "/admin/proposals/acceptProposalFish",
+	    data: {"id" : id},
+	    
+
+	    success: function (fragment) {       
+			 $("#fishTable").replaceWith(fragment);
+			 document.getElementById("fishTable").style.display = "block";
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+	
+	
+}
+
+
+
+
+
+function removeProposalWater(id){
+	
+	
+	$.ajax({
+	    type : "DELETE",
+	    url : "/admin/proposals/removeProposalWater",
+	    data: {"id" : id},
+	    
+
+	    success: function (fragment) {       
+			 $("#waterTable").replaceWith(fragment);
+			 document.getElementById("waterTable").style.display = "block";
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+		
+	}
+	
+	
+	
+	
+
+
+
+function acceptProposalWater(id){
+	
+	
+	$.ajax({
+	    type : "POST",
+	    url : "/admin/proposals/acceptProposalWater",
+	    data: {"id" : id},
+	    
+
+	    success: function (fragment) {       
+			 $("#waterTable").replaceWith(fragment);
+			 document.getElementById("waterTable").style.display = "block";
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+		
+	}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" media="screen" th:href="@{/css/stickyHeader.css}" />
+     <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+          	<meta charset="UTF-8">
+          	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+          	
+          	
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <style>
+ body {
+
+
+background: #2980B9;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.accordion{
+  margin: 40px 0;
+}
+
+
+.accordion .item {
+    border: none;
+    margin-bottom: 50px;
+    background: none;
+}
+.t-p{
+  color: white;
+  	font-family: cursive;
+  mix-blend-mode: difference;
+  padding: 40px 30px 0px 30px;
+}
+.accordion .item .item-header h2 button.btn.btn-link {
+    background: #333435;
+    color: white;
+    border-radius: 0px;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 2.5;
+    text-decoration: none;
+}
+.accordion .item .item-header {
+    border-bottom: none;
+    background: transparent;
+    padding: 0px;
+    margin: 2px;
+}
+
+.accordion .item .item-header h2 button {
+    color: white;
+    font-size: 20px;
+    padding: 15px;
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.accordion .item .item-header h2 i {
+    float: right;
+    font-size: 30px;
+    color: #eca300;
+    background-color: black;
+    width: 60px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+button.btn.btn-link.collapsed i {
+    transform: rotate(0deg);
+}
+
+button.btn.btn-link i {
+    transform: rotate(180deg);
+    transition: 0.5s;
+}
+.aligncenter {
+    display: flex;
+  justify-content: center;
+   }
+   
+   img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+   
+   .sticky+.content {
+	padding-top: 56px;
+}
+   
+   
+    </style>
+  
+  
+  
+  
+  
+</head>
+<body th:style="'background-image: url(' + @{${water.path}} + '); background-repeat: no-repeat;background-attachment: fixed; -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;'">
+
+
+<header class="sticky">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+<div class="container content">
+<div class="accordion" id="accordionExample">
+  <div class="item">
+     <div class="item-header" id="headingOne">
+        <h2 class="mb-0">
+           <button class="btn btn-link" type="button" data-toggle="collapse"
+              data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Информация
+           <i class="fa fa-angle-down"></i>
+           </button>
+        </h2>
+     </div>
+     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+        data-parent="#accordionExample">
+        <div class="t-p" th:text="${water.info}">
+
+        </div>
+     </div>
+  </div>
+  <div class="item">
+     <div class="item-header" id="headingTwo">
+        <h2 class="mb-0">
+           <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+           Упътване
+           <i class="fa fa-angle-down"></i>
+           </button>
+        </h2>
+     </div>
+     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+        data-parent="#accordionExample">
+        <div class="t-p">
+
+
+ <a th:href="@{'http://www.google.com/maps/place/' + ${water.latitude}+','+${water.longtitude}}"  >Упътване до водоема чрез Google Maps.</a>
+
+        </div>
+     </div>
+  </div>
+  <div class="item">
+     <div class="item-header" id="headingThree">
+        <h2 class="mb-0">
+           <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#collapseThree" aria-expanded="false"
+              aria-controls="collapseThree">
+           Рибни видове намиращи се във водоема
+           <i class="fa fa-angle-down"></i>
+           </button>
+        </h2>
+     </div>
+     <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+        data-parent="#accordionExample">
+       
+        <div class="t-p" th:each="fish : ${fishes}">
+        
+ <a th:href="@{'/info/fishInfo?fish=' + ${fish.name}}"   th:text="${fish.name}"></a>
+        </div>
+       
+       
+       
+       
+       
+     </div>
+  </div>
+  <div class="item">
+     <div class="item-header" id="headingFour">
+        <h2 class="mb-0">
+           <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#collapseFour" aria-expanded="false"
+              aria-controls="collapseFour">
+         Коментари
+           <i class="fa fa-angle-down"></i>
+           </button>
+        </h2>
+     </div>
+     <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+        data-parent="#accordionExample">
+       
+       
+       <!-- Comments -->
+						<div class="container mt-5 mb-5" style="z-index: -1"
+							id="commentSection">
+							<div class="row height d-flex justify-content-center align-items-center">
+								<div class="col-md-7">
+									<div class="card">
+
+										<div class="mt-3 d-flex flex-row align-items-center p-3 form-color">
+											<img src="../images/fisherIcon.png" width="50"
+												class="rounded-circle mr-2">
+											<!-- Comment Form -->
+										
+										<div sec:authorize="isAuthenticated()">
+												<input type="text" 
+												    maxlength="300"
+												    class="form-control submit_on_enter"
+												   id="formBody"
+													placeholder="Напишете коментар...">
+												
+											</div>	
+										
+											<!-- Comment Form -->
+										</div>
+										<div class="mt-2" id="commentsDiv">
+											<div class="d-flex flex-row p-3"
+												th:each="comment : ${comments}" >
+												<img src="../images/fisherIcon.png" width="40"
+													height="40" class="rounded-circle mr-3">
+												<div class="w-100">
+													<div
+														class="d-flex justify-content-between align-items-center">
+														<div class="d-flex flex-row align-items-center">
+															<span class="mr-2" th:text="${comment.users.nickname}"></span>
+														</div>
+														<small th:text="${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}"></small>
+													</div>
+													<p class=" text-justify comment-text mb-0"
+														th:text="${comment.body}"></p>
+													
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+<!-- Comments -->
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+     </div>
+  </div>
+</div>
+</div>
+
+
+
+<script th:inline="javascript">
+
+
+
+
+var parentId = [[${water.id}]];
+
+
+/*]]>*/
+</script>
+
+
+
+<script>
+ 
+  $(document).ready(function() {
+	  
+	  
+		   
+	      var token = $("meta[name='_csrf']").attr("content");
+	      var header = $("meta[name='_csrf_header']").attr("content");
+
+
+	      $(document).ajaxSend(function(e, xhr, options) {
+	          xhr.setRequestHeader(header, token);
+	      });
+	     
+
+	  
+
+	  $('.submit_on_enter').keydown(function(event) {
+	
+	    if (event.keyCode == 13) {
+	    	
+	    	var txt = $("#formBody").val();
+	    	var id = parentId;
+	    	
+	    	
+	    	$.ajax({
+	    	    type : "POST",
+	    	    url : "/makeCommentWater",
+	    	    data: {id: id,body:txt},
+	    	    
+
+	    	    success: function (fragment) {       
+	    	   	 $("#commentsDiv").replaceWith(fragment);
+	    			              
+	    	    },
+	    	    error: function (e) {
+	    	        console.log(e);
+	    	    }
+	    	})  
+	    	
+	    	
+	    
+	    		
+	    	}
+	
+	    });
+
+	});
+ 
+ </script>
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

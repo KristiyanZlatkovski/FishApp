@@ -1,0 +1,208 @@
+* {
+  box-sizing: border-box;
+}
+
+
+
+body {
+  background-image: url('../images/dock.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+ 
+  
+
+
+  width:100%;
+}
+
+html{
+width:100%;
+}
+
+
+#myInput {
+  background-image: url('https://img.icons8.com/color/48/000000/search--v1.png');
+   margin: 0 auto;
+   display: block;
+  background-color: rgba(0,0,0,0.5);
+color:white;
+  background-repeat: no-repeat;
+
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+
+}
+input[type=text] {
+  width: 200px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+
+input[type=text]:focus {
+  width: 90%;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 90%;
+  border: 2px solid black;
+  font-size: 18px;
+  text-align: center;
+  background-image: url('../images/woodTexture.jpg');
+
+
+
+}
+
+#myTable th, #myTable td {
+     vertical-align: middle;
+  padding: 12px;
+}
+
+#myTable tr {
+   border: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+#myTable tr.header {
+  background-color: #f1f1f1;
+}
+ #myTable td {
+  
+  text-shadow: 2px 2px 4px #000000;
+}
+
+h2 {
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+  text-align: center;
+  width: 100%;
+}
+thead{
+ color: white;
+  text-shadow: 2px 2px 4px #000000;
+ border-bottom: 1px solid black;
+  background-image: url('../images/darkWood.jpg');
+}
+
+tbody{
+ font-size: 150%;
+vertical-align: middle;
+}
+
+
+
+.table {
+    margin: 0 auto;
+    width: 80%;
+}
+
+
+ th,td {
+ border-bottom: 1px solid black;
+}
+
+
+::-webkit-input-placeholder { /* Edge */
+  color: white;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white;
+}
+
+::placeholder {
+  color: white;
+}
+
+img {
+  border:solid 2px;
+  border-bottom-color:#ffe;
+  border-left-color:#eed;
+  border-right-color:#eed;
+  border-top-color:#ccb;
+  max-height:100%;
+  max-width:99%;
+  
+}
+
+.frame {
+  background-color:#ddc;
+  border:solid 5vmin #eee;
+  border-bottom-color:#fff;
+  border-left-color:#eee;
+  border-radius:2px;
+  border-right-color:#eee;
+  border-top-color:#ddd;
+  box-shadow:0 0 5px 0 rgba(0,0,0,.25) inset, 0 5px 10px 5px rgba(0,0,0,.25);
+  box-sizing:border-box;
+  display:inline-block;
+ 
+  position:relative;
+  text-align:center;
+  &:before {
+    border-radius:2px;
+    bottom:-2vmin;
+    box-shadow:0 2px 5px 0 rgba(0,0,0,.25) inset;
+    content:"";
+    left:-2vmin;
+    position:absolute;
+    right:-2vmin;
+    top:-2vmin;
+  }
+  &:after {
+    border-radius:2px;
+    bottom:-2.5vmin;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.25);
+    content:"";
+    left:-2.5vmin;
+    position:absolute;
+    right:-2.5vmin;
+    top:-2.5vmin;
+  }
+}
+
+
+
+.wooden-text {
+
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+ 
+  color: #fff;
+  mix-blend-mode: darken;
+  text-shadow: 0 0 0.05em rgba(0, 0, 0, 0.2), -0.025em 0.025em 0.1em #000,
+    -0.05em 0.05em 0.1em #000, -0.1em 0.1em 0.3em #000,
+    -0.1em 0.1em 0.5em rgba(0, 0, 0, 0.5);
+  translate: translate3d(0, 0, 0);
+  font-family: "Muli", sans-serif;
+  line-height: 1;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+font-size: 2vh;
+   max-height:100%;
+  max-width:100%;
+}
+
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+  .wooden-text {
+  font-size: 2vw;
+  
+  }
+}

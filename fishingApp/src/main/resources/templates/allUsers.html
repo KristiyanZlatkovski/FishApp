@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	 	 	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+ 	<style>
+
+
+
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('/images/team.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+
+table{
+ 	margin-top:5%;
+ 	
+ 	
+ 	}
+ 	
+ thead{
+ 
+  background: rgba(100, 100, 100, 1) !important;
+ }
+ 	
+ 	
+ 	a{
+ 	color:white;
+ 	}
+ 	table, tbody, tr, th, td{
+ 	 background: rgba(100, 100, 100, 0.3) !important;
+ 	
+ 	
+ 	}
+ 		.sticky+.content {
+	padding-top: 56px;
+}
+	</style>
+</head>
+<body>
+
+
+<header id="header" class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+
+
+
+<div class="container content">
+
+  
+
+
+            <table class="table table-dark" id="userTable">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Име</th>
+      <th scope="col">Роля</th>
+      <th scope="col">Действие</th>
+      
+    </tr>
+  </thead>
+  <tbody id="rowAdd" >
+  <tr th:each="user,index : ${users}">
+   <td><p th:text="${user.id}"></p></td>
+   <td><p th:text="${user.username}"></p></td>
+     <td>
+     
+     <select   class="form-control" th:id="'rolesDrop' + ${index.index}" >
+        <option th:value="${user.roles.id}"selected hidden th:text="${user.roles.name}"></option>
+        
+        
+        <option th:each="role : ${roles}"
+                    th:value="${role.id}"
+                    th:text="${role.name}">
+            </option>
+        
+       
+        </select>
+     
+     
+     
+     </td>
+      <td>
+      <button class="btn" th:onclick="'removeUser(' + ${user.id} + ')'"><i class="fa fa-trash"></i> Премахване</button>
+<button class="btn" th:onclick="'changeUserRole(' + ${user.id} +','+${index.index}+ ')'"><i class="fas fa-edit"></i> Промяна на роля</button>
+      
+      
+      </td>
+   </tr>
+   
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+
+
+ var token = $("meta[name='_csrf']").attr("content");
+ var header = $("meta[name='_csrf_header']").attr("content");
+
+
+ $(document).ajaxSend(function(e, xhr, options) {
+     xhr.setRequestHeader(header, token);
+ });
+ 
+});
+ 
+ 
+ 
+ function changeUserRole(user,index){
+
+	 var role=$("#rolesDrop"+index).val();
+	 $.ajax({
+		 type: "PUT", 
+		   url : "/admin/listUsers/changeUserRole",
+		    data: {"userId" : user,"roleId" : role},
+
+		
+		});
+	 
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ function removeUser(id){
+	
+	 
+	 
+	 $.ajax({
+		    type : "DELETE",
+		    url : "/admin/listUsers/removeUser",
+		    data: {"id" : id},
+		    
+
+		    success: function (fragment) {       
+		    	 $("#userTable").replaceWith(fragment);
+				             
+		    },
+		    error: function (e) {
+		        console.log(e);
+		    }
+		})   
+	 }
+ </script>
+
+
+
+
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

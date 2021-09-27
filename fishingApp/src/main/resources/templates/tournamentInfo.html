@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}" />
+<link rel="stylesheet" media="screen" th:href="@{/css/comments.css}" />
+        	 	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+	background-color: #2f94e4;
+	background-image: url('../images/tournamentBackground.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.accordion {
+	margin: 40px 0;
+}
+
+.accordion .item {
+	border: none;
+	margin-bottom: 50px;
+	background: none;
+}
+
+.t-p {
+	color: white;
+	font-family: cursive;
+	padding: 40px 30px 0px 30px;
+	text-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.accordion .item .item-header h2 button.btn.btn-link {
+	background-color: #2a2a72;
+	background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+	color: white;
+	border-radius: 0px;
+	font-family: 'Poppins';
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 2.5;
+	text-decoration: none;
+}
+
+.accordion .item .item-header {
+	border-bottom: none;
+	background: transparent;
+	padding: 0px;
+	margin: 2px;
+}
+
+.accordion .item .item-header h2 button {
+	color: white;
+	font-size: 20px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+	text-align: left;
+}
+
+.accordion .item .item-header h2 i {
+	float: right;
+	font-size: 30px;
+	color: #eca300;
+	background-color: black;
+	width: 60px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+}
+
+button.btn.btn-link.collapsed i {
+	transform: rotate(0deg);
+}
+
+button.btn.btn-link i {
+	transform: rotate(180deg);
+	transition: 0.5s;
+}
+
+.aligncenter {
+	display: flex;
+	justify-content: center;
+}
+
+#headerFish {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.img-responsive {
+	display: block;
+	max-width: 40%;
+	height: auto;
+}
+
+.sticky+.content {
+	padding-top: 56px;
+}
+
+#collapseTwo{
+color:white;
+}
+p{
+color:gray;
+}
+</style>
+
+
+
+
+</head>
+<body>
+
+
+	<header id="header" class="sticky" style="z-index: 100">
+		<div th:replace="layout :: header"></div>
+	</header>
+
+
+	<div class="content">
+		<p class="aligncenter">
+
+			<img src="../images/trophyPic.png" class="img-responsive" alt="..."
+				id="headerFish">
+		</p>
+
+		<div class="container">
+			<div class="accordion" id="accordionExample">
+
+
+				<div class="item">
+					<div class="item-header" id="headingOne">
+						<h2 class="mb-0">
+							<button style="z-index: -1" class="btn btn-link" type="button"
+								data-toggle="collapse" data-target="#collapseOne"
+								aria-expanded="true" aria-controls="collapse">
+								Класиране. <i class="fa fa-angle-down"></i>
+							</button>
+						</h2>
+					</div>
+					<div id="collapseOne" class="collapse show"
+						aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div class="table-responsive">
+							<table class="table table-dark table-hover">
+								<thead>
+									<tr>
+										<th scope="col" data-formatter="runningFormatter">Позиция</th>
+										<th scope="col">Участник</th>
+										<th scope="col">Тегло на улова</th>
+										<th scope="col">Размер на улова</th>
+										<th scope="col">Вид Риба</th>
+
+
+
+									</tr>
+								</thead>
+								<tbody id="rowAdd">
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<div class="item">
+					<div class="item-header" id="headingTwo">
+						<h2 class="mb-0">
+							<button class="btn btn-link" type="button" data-toggle="collapse"
+								data-target="#collapseTwo" aria-expanded="true"
+								aria-controls="collapseTwo">
+								Информация. <i class="fa fa-angle-down"></i>
+							</button>
+						</h2>
+					</div>
+					<div id="collapseTwo" class="collapse show"
+						aria-labelledby="headingTwo" data-parent="#accordionExample">
+						
+						
+						<p>Организатор:</p><div  th:text="${tournament.hostName}"></div>
+						<p>Начална дата:</p><div  th:text="${tournament.startingDate}"></div>
+						<p>Крайна дата:</p><div  th:text="${tournament.endDate}"></div>
+						
+						
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="item-header" id="headingThree">
+						<h2 class="mb-0">
+							<button class="btn btn-link collapsed" type="button"
+								data-toggle="collapse" data-target="#collapseThree"
+								aria-expanded="false" aria-controls="collapseThree">
+								Награди. <i class="fa fa-angle-down"></i>
+							</button>
+						</h2>
+					</div>
+					<div id="collapseThree" class="collapse"
+						aria-labelledby="headingThree" data-parent="#accordionExample">
+						<div class="t-p" th:text="${tournament.rewardsInfo}"></div>
+					</div>
+				</div>
+				<div class="item" id="Four">
+					<div class="item-header" id="headingFour">
+						<h2 class="mb-0">
+							<button onclick="toElement()" class="btn btn-link collapsed"
+								type="button" data-toggle="collapse" data-target="#collapseFour"
+								aria-expanded="false" aria-controls="collapseFour">
+								Коментари. <i class="fa fa-angle-down"></i>
+							</button>
+						</h2>
+					</div>
+					<div id="collapseFour" class="collapse"
+						aria-labelledby="headingFour" data-parent="#accordionExample">
+
+
+
+
+
+<!-- Comments -->
+						<div class="container mt-5 mb-5" style="z-index: -1"
+							id="commentSection">
+							<div class="row height d-flex justify-content-center align-items-center">
+								<div class="col-md-7">
+									<div class="card">
+
+										<div class="mt-3 d-flex flex-row align-items-center p-3 form-color">
+										<img src="../images/fisherIcon.png" width="50"
+												class="rounded-circle mr-2">
+											<!-- Comment Form -->
+										
+										<div sec:authorize="isAuthenticated()">
+												<input type="text" 
+												    maxlength="300"
+												    class="form-control submit_on_enter"
+												   id="formBody"
+													placeholder="Напишете коментар...">
+												
+											</div>	
+										
+											<!-- Comment Form -->
+										</div>
+										<div class="mt-2" id="commentsDiv">
+											<div class="d-flex flex-row p-3"
+												th:each="comment : ${comments}" >
+											<img src="../images/fisherIcon.png" width="40"
+													height="40" class="rounded-circle mr-3">
+												<div class="w-100">
+													<div
+														class="d-flex justify-content-between align-items-center">
+														<div class="d-flex flex-row align-items-center">
+															<span class="mr-2" th:text="${comment.users.username}"></span>
+														</div>
+														<small th:text="${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}"></small>
+													</div>
+													<p class=" text-justify comment-text mb-0"
+														th:text="${comment.body}"></p>
+													
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+<!-- Comments -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+<script th:inline="javascript">
+
+
+
+var entries = [[${entries}]];
+var parentId = [[${tournament.id}]];
+
+
+/*]]>*/
+</script>
+
+	<script>
+  var entriesFromInlineModel=entries;
+  
+  $( document ).ready(function() {
+	    
+  for (var i=0; i<entries.length;i++) {
+	
+	 
+	  
+	   
+	  var placement='<th scope="row">'+(i+1)+'</th>';
+      var id=  '<td scope="row">'+entries[i].users.nickname+'</td>';
+      var weight=  '<td scope="row">'+entries[i].weight+'</td>';
+      var size='<td scope="row">'+entries[i].size+'</td>';
+      var fishName='<td scope="row">'+entries[i].fishes.name+'</td>';
+      var row;
+      
+      if(i==0){
+    	  row= '<tr style="background-color:#ffd700;">'+placement+id+weight+size+fishName+'</tr>';
+    	 	
+	    }
+	    else if(i==1){
+	    	row= '<tr style="background-color:silver;">'+placement+id+weight+size+fishName+'</tr>';
+	     	
+	    }
+	    else if(i==2){
+	    	row= '<tr style="background-color:#cd7f32;">'+placement+id+weight+size+fishName+'</tr>';
+	     	
+	    }
+      
+	    else{
+	    	 row= '<tr>'+placement+id+weight+size+fishName+'</tr>';
+	    	
+	    }
+      
+      
+   
+            
+            $("#rowAdd").append(row);
+            
+            
+         
+     };
+
+	});
+ 
+ </script>
+
+	<script>
+ 
+ function toElement(){
+	 document.documentElement.scrollBottom = 0;
+ }
+ 
+ </script>
+
+
+	<script>
+ 
+  $(document).ready(function() {
+	  
+	  
+		   
+	      var token = $("meta[name='_csrf']").attr("content");
+	      var header = $("meta[name='_csrf_header']").attr("content");
+
+
+	      $(document).ajaxSend(function(e, xhr, options) {
+	          xhr.setRequestHeader(header, token);
+	      });
+	     
+
+	  
+
+	  $('.submit_on_enter').keydown(function(event) {
+	
+	    if (event.keyCode == 13) {
+	   
+	    	var txt = $("#formBody").val();
+	    	var id = parentId;
+	    	
+	    	
+	    	$.ajax({
+	    	    type : "POST",
+	    	    url : "/makeCommentTournament",
+	    	    data: {id: id,body:txt},
+	    	    
+
+	    	    success: function (fragment) {       
+	    	   	 $("#commentsDiv").replaceWith(fragment);
+	    			              
+	    	    },
+	    	    error: function (e) {
+	    	        console.log(e);
+	    	    }
+	    	})  
+	    	
+	    	
+	    
+	    		
+	    	}
+	
+	    });
+
+	});
+ 
+ </script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          
+
+  <link rel="stylesheet" media="screen" th:href="@{/css/stickyHeader.css}" />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	
+ 	<style>
+* {
+  box-sizing: border-box;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+body {
+  background-image: url('../images/waterSurface.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+      font-family: "Open Sans Condensed", sans-serif !important;
+ 
+ 
+
+  width:100%;
+}
+
+html{
+width:100%;
+}
+
+
+#myInput {
+  background-image: url('https://img.icons8.com/color/48/000000/search--v1.png');
+   margin: 0 auto;
+   display: block;
+     background-color: #00FFFF;
+color:white;
+  background-repeat: no-repeat;
+
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+
+}
+input[type=text] {
+  width: 200px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+  width: 90%;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 90%;
+  
+  font-size: 18px;
+  text-align: center;
+
+}
+
+#myTable th, #myTable td {
+     vertical-align: middle;
+  padding: 12px;
+}
+
+#myTable tr {
+  
+}
+
+#myTable tr.header {
+  background-color: #f1f1f1;
+}
+ #myTable td {
+  
+  text-shadow: 2px 2px 4px #000000;
+}
+
+h2 {
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+  text-align: center;
+  width: 100%;
+}
+thead{
+ color: white;
+  text-shadow: 2px 2px 4px #000000;
+
+background-color: #29539b;
+background-image: linear-gradient(315deg, #1e3b70 0%,   #29539b 74%);
+}
+
+tbody{
+ font-size: 150%;
+vertical-align: middle;
+}
+
+img{
+width:80%;
+filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+}
+
+.table {
+    margin: 0 auto;
+    width: 80%;
+}
+
+
+ th,td {
+
+}
+
+
+::-webkit-input-placeholder { /* Edge */
+  color: white;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white;
+}
+
+::placeholder {
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+
+
+<header class="header sticky">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+<div class="content">
+
+
+
+
+
+<table class="table mt-5 table-borderless" id="myTable">
+
+ <thead>
+ <tr style="width: 100%; font-size: 25px;">
+    <th colspan="2">Списък с рибни видове
+
+    
+    </th>
+
+  </tr>
+  
+  
+  
+  
+  
+  
+  
+  <tr >
+      <th colspan="2">
+    <input type="text" autocomplete="off" id="myInput" onkeyup="myFunction()" placeholder="Търсене по име.." title="Type in a name">
+    
+    </th>
+   
+  </tr>
+   </thead>
+   <tbody>
+  <tr th:each="fish : ${fishes}">
+     <td><a th:text="${fish.name}" style="color: white" th:href="@{'/info/fishInfo?fish=' + ${fish.name}}"></a></td>
+   <td><img th:src="${fish.path}" class="img-responsive"  alt="..."></td>
+    </tr>
+      </tbody>
+</table>
+
+</div>
+
+
+
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+
+<script>
+
+	
+
+
+
+</script>
+
+
+
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

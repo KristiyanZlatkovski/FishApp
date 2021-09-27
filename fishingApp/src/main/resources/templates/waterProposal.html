@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js" integrity="sha512-zuZ5wVszlsRbRF/vwXD0QS/tHzBYHFzCD/BT0lI3yrWhNZFWDkkF3KPEY//WTanqxwPdZkskQ+xZo0rnfHBc5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	<style>
+ 	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('../images/waterRipples.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+
+html{
+width:100%;
+}
+ 	.container{
+ 	width:100%;
+ 	margin-top:2.5%;
+
+ 	}
+ 	 
+ 	
+
+h2{
+	
+	
+	color:white;
+}
+
+
+label{
+color:white;
+
+}
+
+.fish-log {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  background: rgba(130,130,130,.3);
+  padding: 20px 22px;
+  border: 1px solid;
+  border-top-color: rgba(255,255,255,.4);
+  border-left-color: rgba(255,255,255,.4);
+  border-bottom-color: rgba(60,60,60,.4);
+  border-right-color: rgba(60,60,60,.4);
+
+}
+
+.fish-log input, .fish-log button {
+
+  border: 1px solid;
+  border-bottom-color: rgba(255,255,255,.5);
+  border-right-color: rgba(60,60,60,.35);
+  border-top-color: rgba(60,60,60,.35);
+  border-left-color: rgba(80,80,80,.45);
+
+  background-repeat: no-repeat;
+  padding: 8px 24px 8px 10px;
+  font: bold .875em/1.25em "Open Sans Condensed", sans-serif;
+  letter-spacing: .075em;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.1);
+  margin-bottom: 19px;
+}
+
+.fish-log button {
+width:25%;
+margin:auto;
+}
+
+
+
+.fish-log input{
+
+ color: black;
+}
+.fish-log:focus { background-color: rgba(0,0,0,.4); }
+
+
+
+::-webkit-input-placeholder { color: #ccc; text-transform: uppercase; }
+::-moz-placeholder { color: #ccc; text-transform: uppercase; }
+:-ms-input-placeholder { color: #ccc; text-transform: uppercase; }
+
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 		.sticky+.content {
+	padding-top: 56px;
+}	
+ 	
+ 	
+ 	
+ 	span{
+color:red;
+}
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	</style>
+</head>
+<body>
+
+
+<header class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+<div class="container content">
+ 
+        <form method="POST" class="fish-log" th:object="${waterForm}" th:action="@{/waterProposal}"  enctype="multipart/form-data">
+            <h2 class="form-signin-heading">Въведете детайли за предложения от вас водоем.</h2>
+            
+            
+                <div class="form-group">
+                    <label class="form-control-label" for="nameBox" >Въведете името на водоема.</label>
+   					<input class="form-control"  type="text" th:field="*{name}"  maxlength="30" id="nameBox"/>
+   					<span class="has-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+               </div>
+            
+           
+            <div class="form-group">
+                    <label class="form-control-label" for="longBox" >Въведете географската дължина на водоема.</label>
+   					<input class="form-control"  type="text" th:field="*{longtitude}"  maxlength="15"  id="longBox"/>
+   					<span class="has-error" th:if="${#fields.hasErrors('longtitude')}" th:errors="*{longtitude}"></span>
+               </div>
+            
+             <div class="form-group">
+                    <label class="form-control-label" for="latBox" >Въведете географската ширина на водоема.</label>
+   					<input class="form-control"  type="text" th:field="*{latitude}"   maxlength="15" id="latBox"/>
+   					<span class="has-error" th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"></span>
+               </div>
+            
+            
+            <div class="form-group">
+                    <label class="form-control-label" for="waterInfoBox" >
+                    Въведете допълнителна информация за водоема.
+                    </label>
+                  
+                   
+                    <!--   <span class="tooltiptext">като например ,необходими разрешения за риболов във водоема или история на създаването му</span> -->
+                 
+                       <i class="fas fa-info-circle tooltip"></i>
+   					<input class="form-control"  type="text" th:field="*{waterInfo}"   maxlength="300" id="waterInfoBox"/>
+               </div>
+         
+             <div class="form-group">
+                    <label class="form-control-label" for="proposalInfoBox" >
+                    Въведете допълнителна информация за предложението си.
+                    </label>
+                    
+                  <!--    <span class="tooltiptext">, като например ,необходими разрешения за риболов във водоема.</span> -->
+                    
+                    
+   					<input class="form-control"  type="text" th:field="*{info}"   maxlength="300" id="proposalInfoBox"/>
+               </div>
+            
+            
+            
+            
+             <div class="form-group">
+     
+    <label>Прикачете снимка на водоема ако разполагате с такава. </label>
+    <input type="file" name="image" accept="image/png, image/jpeg"  class="form-control"/>
+     
+    </div>
+            
+            
+    
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Изпращане</button>
+        </form>
+
+    </div>
+
+
+<script>
+
+$(".container").ripples({
+	  resolution: 1024,
+	  dropRadius: 10,
+	  perturbance: 0.01,
+	  interactive:true
+});
+
+
+
+
+</script>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

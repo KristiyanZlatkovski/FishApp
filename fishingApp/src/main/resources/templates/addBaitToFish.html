@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+ 	<meta charset="UTF-8">
+ 	 	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+
+
+<style>
+ 	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('/images/tackle.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+
+html{
+width:100%;
+}
+
+h2{
+	
+	
+	color:white;
+}
+
+
+label{
+color:white;
+
+}
+table, tbody, tr, th, td{
+ 	 background: rgba(100, 100, 100, 0.3) !important;
+ 	
+ 	
+ 	}
+ 	
+ 		table{
+ 	margin-top:5%;
+ 	
+ 	
+ 	}
+ 	
+ thead{
+ 
+  background: rgba(100, 100, 100, 1) !important;
+ }
+ 
+ a{
+	
+	
+	color:white;
+}
+ 
+  	.sticky+.content {
+	padding-top: 56px;
+}
+ h2{
+ color:black;
+ }
+</style>
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+	<header id="header" class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+
+
+
+<div class="container content">
+
+  <h2>Добавяне на любима стръв към вид риба</h2>
+
+        <form  class="form-inline"   action="" id="ajaxForm">
+        
+            <div class="form-group">
+            
+              <select   class="form-control" id="fish">
+                <option value="0"selected hidden>Изберете вид риба...</option>
+            <option th:each="fish : ${fishes}"
+                    th:value="${fish.id}"
+                    th:text="${fish.name}">
+            </option>
+        </select>
+           
+             </div>
+            
+             <div class="form-group">
+            
+        <select   class="form-control" id="bait">
+        <option value="0"selected hidden>Изберете вид примамка...</option>
+        <option th:each="bait : ${baits}"
+                    th:value="${bait.id}"
+                    th:text="${bait.name}">
+        </select>
+    </div>
+      
+         
+         
+         <button class="btn btn-lg btn-primary ml-1 " onclick="saveBaitToFish()">Добавяне</button>   
+            
+            
+
+            
+        </form>
+
+
+            <table class="table table-dark" id="baitByFishTable">
+  <thead>
+    <tr>
+      <th scope="col">№</th>
+      <th scope="col">Примамка</th>
+      <th scope="col">Опции</th>
+      
+    </tr>
+  </thead>
+  <tbody id="rowAdd">
+    <tr th:each="baitByFish,count : ${baitsByFish}">
+   
+    <th scope="row" th:text="${count.count}"></th>
+    <td  th:text="${baitByFish.name}"></td>
+    <td><button class="btn"  th:onclick="'removeBait(' + ${baitByFish.id} + ')'"><i class="fa fa-trash"></i> Премахване</button></td>
+   
+   
+     </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+    jQuery('#ajaxForm').submit( function(e){ 
+    e.preventDefault();
+    
+});
+     $("#fish").change(function() {
+    	 getAllBaits();
+    });
+   
+   
+  
+    	    
+    	   
+    	   
+         var token = $("meta[name='_csrf']").attr("content");
+         var header = $("meta[name='_csrf_header']").attr("content");
+
+
+         $(document).ajaxSend(function(e, xhr, options) {
+             xhr.setRequestHeader(header, token);
+         });
+        
+  
+   
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+function removeBait(baitId){
+var fishId = $("#fish").val();
+
+
+
+
+
+$.ajax({
+    type : "DELETE",
+    url : "/admin/manageFishes/removeBaitFromFish",
+    data: {"fishId" : fishId,"baitId": baitId},
+    
+
+    success: function (fragment) {       
+    	 $("#baitByFishTable").replaceWith(fragment);
+		             
+    },
+    error: function (e) {
+        console.log(e);
+    }
+})   
+
+
+
+}
+
+
+function getAllBaits(){
+	var fishId = $("#fish").val();
+	
+	$.ajax({
+        type: "GET",
+        url : "/admin/manageFishes/getAllBaits",
+        data: {"fishId" : fishId},
+        async: true,
+        success: function (fragment) {       
+       	 $("#baitByFishTable").replaceWith(fragment);
+   		             
+       },
+       error: function (e) {
+           console.log(e);
+       }
+    
+    });
+	
+}
+
+
+function saveBaitToFish(){
+
+var fishId= $("#fish").val();
+
+var baitId = $("#bait").val();
+ 
+
+
+$.ajax({
+    type : "POST",
+    url : "/admin/manageFishes/saveBaitToFish",
+    data: {"baitId" : baitId,"fishId": fishId},
+    
+
+    success: function (fragment) {       
+    	 $("#baitByFishTable").replaceWith(fragment);
+		             
+    },
+    error: function (e) {
+        console.log(e);
+    }
+})   
+
+
+
+}
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

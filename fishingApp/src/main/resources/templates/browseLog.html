@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	 	 	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+ 	
+ 	 	<style>
+ 	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('../images/readingWater.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+
+html{
+width:100%;
+}
+ 	
+ 	h2{
+	
+	
+	color:white;
+}
+
+
+label{
+color:white;
+ 	}
+ 	
+ 	table{
+ 	margin-top:5%;
+ 	
+ 	}
+ 	.sticky+.content {
+	padding-top: 56px;
+}
+ 	</style>
+ 	
+ 	
+ 	
+ 	
+</head>
+<body>
+
+
+<header class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+
+
+
+<div class="container content">
+
+  <h2>Риболовни дневници</h2>
+
+        <form  class="form-inline"   action="" id="ajaxForm">
+        
+            <div class="form-group">
+          
+              <select   class="form-control" id="water">
+                <option value=""selected hidden>Изберете водоем...</option>
+                  <option value="">-Всички-</option>
+            <option th:each="water : ${waters}"
+                    th:value="${water.id}"
+                    th:text="${water.name}">
+            </option>
+        </select>
+           
+             </div>
+            
+             <div class="form-group" id="fishDiv">
+            
+        <select   class="form-control" th:onchange="'getFishingLogs();'" id="fish">
+        <option value=""selected hidden>Изберете вид риба...</option>
+        <option value="">-Всички-</option>
+        <option th:each="fish : ${fishesByWater}"
+                    th:value="${fish.id}"
+                    th:text="${fish.name}">
+        </select>
+    </div>
+      
+         
+         
+         
+         
+            
+      
+            
+            
+            
+      
+            <div class="form-group ml-1" >
+            <input   type="checkbox" class="form-control" id="shareBool">
+  
+              <label class="form-control-label" for="shareBool">Само лични записи</label>
+    
+  </div>
+            
+            
+            
+            
+            
+            
+
+            
+        </form>
+
+<div class="table-responsive" id="logTable">
+            <table class="table table-dark table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Потребител</th>
+      <th scope="col">Водоем</th>
+      <th scope="col">Риба</th>
+       <th scope="col">Снимка</th>
+      <th scope="col">Стръв</th>
+      <th scope="col">Дата</th>
+            <th id="options" th:if="${userLogsOnly}" scope="col">Опции</th>
+    </tr>
+  </thead>
+  <tbody id="rowAdd">
+    <tr th:each="log : ${foundLogs}">
+      <th scope="row" th:text="${log.userName}"></th>
+      
+        <td><a th:text="${log.waterName}" th:href="@{'/info/waterInfo?water=' + ${log.waterName}}"></a></td>
+        <td><a th:text="${log.fishName}" th:href="@{'/info/fishInfo?fish=' + ${log.fishName}}"></a></td>
+        <td><img th:src="${log.path}" class="img-responsive" style="width:100%;" alt="..."></td>
+        <td th:text="${log.baitName}"></td>
+        <td th:text="${log.date}"></td>
+         <td th:if="${userLogsOnly}">
+   <button class="btn"  th:onclick="'deleteUserJournalEntry(' + ${log.id} + ')'"><i class="fa fa-trash"></i>
+
+     Изтриване
+      
+      </button>
+      </td>
+    </tr>
+   
+   
+   
+   
+   
+   
+   
+  </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+  
+      $("#water").change(function() {
+        getFishingLogs();
+    });
+   
+    
+   $("#shareBool").change(function() {
+        getFishingLogs();
+   
+    });
+   
+});
+
+$(document).ready(function () {
+    
+	   
+	   
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+   
+});
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+
+
+
+function getFishingLogs(){
+
+ var water = $("#water").val();
+ var fish = $("#fish").val();
+ var share = $("#shareBool").is(":checked");
+
+ 
+ $.ajax({
+	    type : "GET",
+	    url : "/journal/search",
+	    data: {"waterId" : water,"fishId" : fish,"shared" : share},
+	    
+
+	    success: function (fragment) {       
+			 $("#logTable").replaceWith(fragment);
+		
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+
+}
+
+
+
+
+function deleteUserJournalEntry(id){
+	
+	$.ajax({
+	    type : "DELETE",
+	    url : "/journal/removeUserJournal",
+	    data: {"id" : id},
+	    
+
+	    success: function () {       
+	   	
+	    	 getFishingLogs();
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+	
+
+}
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

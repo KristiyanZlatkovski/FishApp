@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+          
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+  <link rel="stylesheet" media="screen" th:href="@{/css/logForm.css}"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	
+ 	<style>
+.sticky+.content {
+	padding-top: 56px;
+}
+
+
+</style>
+</head>
+<body>
+
+
+<header class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+<div class="container content">
+
+        <form  method="POST" class="fish-log" th:object="${logForm}" th:action="@{/journal/makeLog}"  enctype="multipart/form-data">
+            <h2 class="form-signin-heading text-white">Създайте вашият риболовен запис</h2>
+             <h6 class="form-signin-heading  text-white">
+             За да се квалифицира за участие в турнир всички полета трябва да бъдат попълнени и да бъде прикачена валидна снимка
+             </h6>
+            
+            <div class="form-group">
+              <select th:field="*{waters}" class="form-control" data-live-search="true" id="water">
+                <option value=""selected hidden>Изберете водоем...</option>
+            <option th:each="water : ${waters}"
+                    th:value="${water.id}"
+                    th:text="${water.name}">
+            </option>
+        </select>
+         <span class="has-error" th:if="${#fields.hasErrors('waters')}" th:errors="*{waters}"></span>
+            </div>
+            
+            
+             <div class="form-group">
+        <select th:field="${logForm.fishes}" class="form-control" id="fish">
+        <option value=""selected hidden>Изберете вид риба...</option>
+         <option th:each="fish : ${fishesByWater}"
+                    th:value="${fish.id}"
+                    th:text="${fish.name}">
+            </option>
+        
+        </select>
+         <span class="has-error" th:if="${#fields.hasErrors('fishes')}" th:errors="*{fishes}"></span>
+    </div>
+            
+             <div class="form-group">
+              <select th:field="*{baits}" class="form-control" id="bait">
+                <option value=""selected hidden>Изберете стръв...</option>
+            <option th:each="bait : ${baits}"
+                    th:value="${bait.id}"
+                    th:text="${bait.name}">
+            </option>
+        </select>
+         <span class="has-error" th:if="${#fields.hasErrors('baits')}" th:errors="*{baits}"></span>
+            </div>
+            
+            
+            <div class="form-group">
+                    <label class="form-control-label text-white" for="sizeBox" >Въведете ширината на уловената риба в сантиметри.</label>
+   					<input class="form-control"  type="number" th:field="*{size}"  maxlength="5"  id="sizeBox"/>
+   					<span class="has-error" th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></span>
+               </div>
+            
+             <div class="form-group">
+                    <label class="form-control-label text-white" for="weightBox" >Въведете  теглото на на уловената риба в килограми.</label>
+   					<input class="form-control"  type="number" th:field="*{weight}"   maxlength="5" id="weightBox"/>
+   					<span class="has-error" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></span>
+               </div>
+            
+            
+            
+            
+            
+            
+            
+             <div class="form-group">
+     
+    <label class="text-white">Снимка: </label>
+    <input type="file" name="image" accept="image/png, image/jpeg"  class="form-control"/>
+      <span class="has-error" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></span>
+         <span class="has-error-size"  th:value="${message}"></span>
+    </div>
+            
+            
+            
+            
+            
+                    <div class="form-group">
+                    <label class="form-control-label text-white" for="infoBox" >Въведете допълнителна информация относно улова.</label>
+   <input autocomplete="off" class="form-control"
+           type="text"
+     
+           th:field="*{info}"   id="infoBox"/>
+  </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            <div class="form-group text-center" >
+     <label class="form-control-label text-white" for="shareBool" >Желая записа да бъде споделен с останалите потребители</label>
+    <input th:field="*{shared}" type="checkbox" class="form-control" id="shareBool">
+ 
+  </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Изпращане</button>
+        </form>
+
+    </div>
+
+
+
+
+<script>
+
+$(document).ready(function() {
+    $("#water").change(function() {
+        sendAjaxRequest();
+    });
+    
+    
+    
+    
+});
+
+
+
+
+
+
+function sendAjaxRequest() {
+    var water = $("#water").val();
+  if(water==""){
+  $('#ajaxForm').trigger("reset");
+  }
+else{
+	
+	$.ajax({
+	    type : "GET",
+	    url : "/journal/getFishByWater2",
+	    data: {"water" : water},
+	    
+
+	    success: function (fragment) {       
+			 $("#fish").replaceWith(fragment);
+		
+			              
+	    },
+	    error: function (e) {
+	        console.log(e);
+	    }
+	})  
+	
+	
+	
+	
+	
+    }
+};
+
+</script>
+
+
+
+
+
+
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+ 	<meta charset="UTF-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	 	<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+
+
+<style>
+ 	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('/images/fishToWater.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+
+html{
+width:100%;
+}
+
+h2{
+	
+	
+	color:white;
+}
+
+
+label{
+color:white;
+
+}
+table, tbody, tr, th, td{
+ 	 background: rgba(100, 100, 100, 0.3) !important;
+ 	
+ 	
+ 	}
+ 	
+ 		table{
+ 	margin-top:5%;
+ 	
+ 	
+ 	}
+ 	
+ thead{
+ 
+  background: rgba(100, 100, 100, 1) !important;
+ }
+ 
+ a{
+	
+	
+	color:white;
+}
+ 
+ .sticky+.content {
+	padding-top: 56px;
+}
+ 
+</style>
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+	<header id="header" class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+
+
+
+<div class="container content">
+
+  <h2>Добавяне на вид риба към водоем</h2>
+
+        <form  class="form-inline"   action="" id="ajaxForm">
+        
+            <div class="form-group">
+            
+              <select   class="form-control" id="water">
+                <option value="0"selected hidden>Изберете водоем...</option>
+            <option th:each="water : ${waters}"
+                    th:value="${water.id}"
+                    th:text="${water.name}">
+            </option>
+        </select>
+           
+             </div>
+            
+             <div class="form-group">
+            
+        <select   class="form-control" id="fish">
+        <option value="0"selected hidden>Изберете вид риба...</option>
+        <option th:each="fish : ${fishes}"
+                    th:value="${fish.id}"
+                    th:text="${fish.name}">
+        </select>
+    </div>
+      
+         
+         
+         <button class="btn btn-lg btn-primary ml-1 " onclick="getFishes()">Добавяне</button>   
+            
+            
+
+            
+        </form>
+
+
+            <table class="table table-dark" id="fishByWaterTable">
+  <thead>
+    <tr>
+      <th scope="col">№</th>
+      <th scope="col">Риба</th>
+      <th scope="col">Опции</th>
+      
+    </tr>
+  </thead>
+  <tbody id="rowAdd">
+    <tr th:each="fishByWater,count : ${fishesByWater}">
+   
+    <th scope="row" th:text="${count.count}"></th>
+    <td><a  th:href="@{'/info/fishInfo?fish=' + ${fishByWater.id}}" th:text="${fishByWater.name}"></a></td>
+    <td><button class="btn"  th:onclick="'removeFish(' + ${fishByWater.id} + ')'"><i class="fa fa-trash"></i> Премахване</button></td>
+   
+   
+     </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+    jQuery('#ajaxForm').submit( function(e){ 
+    e.preventDefault();
+    
+});
+     $("#water").change(function() {
+    	 getAllFishes();
+    });
+   
+   
+  
+    	    
+    	   
+    	   
+         var token = $("meta[name='_csrf']").attr("content");
+         var header = $("meta[name='_csrf_header']").attr("content");
+
+
+         $(document).ajaxSend(function(e, xhr, options) {
+             xhr.setRequestHeader(header, token);
+         });
+        
+  
+   
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+function removeFish(fishId){
+var waterId = $("#water").val();
+
+
+
+
+
+$.ajax({
+    type : "DELETE",
+    url : "/admin/manageWaters/removeFishFromWater",
+    data: {"waterId" : waterId,"fishId": fishId},
+    
+
+    success: function (fragment) {       
+    	 $("#fishByWaterTable").replaceWith(fragment);
+		             
+    },
+    error: function (e) {
+        console.log(e);
+    }
+})   
+
+
+
+}
+
+
+function getAllFishes(){
+	var waterId = $("#water").val();
+	
+	$.ajax({
+        type: "GET",
+        url : "/admin/manageWaters/getAllFishByWater",
+        data: {"waterId" : waterId},
+        async: true,
+        success: function (fragment) {       
+       	 $("#fishByWaterTable").replaceWith(fragment);
+   		             
+       },
+       error: function (e) {
+           console.log(e);
+       }
+    
+    });
+	
+	
+}
+
+function getFishes(){
+
+var fishId= $("#fish").val();
+
+var waterId = $("#water").val();
+ 
+
+
+$.ajax({
+    type : "POST",
+    url : "/admin/manageWaters/saveFishToWater",
+    data: {"waterId" : waterId,"fishId": fishId},
+    
+
+    success: function (fragment) {       
+    	 $("#fishByWaterTable").replaceWith(fragment);
+		             
+    },
+    error: function (e) {
+        console.log(e);
+    }
+})   
+
+
+
+}
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

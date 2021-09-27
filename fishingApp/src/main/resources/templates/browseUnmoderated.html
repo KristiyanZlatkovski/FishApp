@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/headerLayout.css}"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+ 	
+ 	<style>
+
+
+
+	@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
+ 	body {
+  background-image: url('/images/moderatePic.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed !important;
+
+	height: 100vh;
+	background-position: center, center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+   
+   font-family: "Open Sans Condensed", sans-serif;
+ 
+ 
+
+  width:100%;
+}
+ 	h2,p{
+
+	margin: auto;
+	color:white;
+}
+.form-group {
+margin: auto;
+}
+
+.container{
+text-align:center;
+	
+}
+
+
+label{
+color:white;
+ 	}
+ 	
+ 	.sticky+.content {
+	padding-top: 56px;
+}
+ 		</style>
+ 	
+</head>
+<body>
+
+
+	<header id="header" class="sticky" style="z-index: 100">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+
+
+
+
+<div class="container content">
+
+
+  <h2>Потребителски вход нуждаещ се от модерация</h2>
+  <p>Изберете категория на елемнта за модерация.</p>
+        <form  class="form-inline"   action="" id="ajaxForm">
+        
+            <div class="form-group">
+              <select   class="form-control" id="choice">
+                <option value=""selected hidden>Изберете категория...</option>
+              <option value="Comment">Потребителки коментари</option>
+                 <option value="Journal">Потребителски записи</option>
+            
+        </select>
+           
+             </div>
+            
+          
+            
+        </form>
+        
+
+
+
+
+
+<div   class="table-responsive" id="commentTable"  style="display: none">
+<table class="table table-dark" >
+          
+   <thead>
+    <tr>
+     
+      <th scope="col">Потребител</th>
+      <th scope="col">Коментар</th>
+      <th scope="col">Опции</th>
+      
+    </tr>
+  </thead>
+  <tbody >
+  <tr th:each="comment : ${comments}">
+   
+   <td><p th:text="${comment.users.id}"></p></td>
+     <td><p th:text="${comment.body}"  style="width:100%;"></p></td>
+
+         <td>
+      <button class="btn" th:onclick="'removeComment(' + ${comment.id} + ')'"><i class="fa fa-trash"></i> Отхвърляне</button>
+      <button class="btn" th:onclick="'acceptComment(' + ${comment.id} + ')'"><i class="fas fa-edit"></i> Приемане</button>
+      </td>
+   </tr>
+   
+  </tbody>
+</table>
+
+</div>
+
+
+
+<div   class="table-responsive" id="journalTable"  style="display: none">
+<table class="table table-dark" >
+          
+   <thead>
+    <tr>
+     
+      <th scope="col">Потребител</th>
+      <th scope="col">Риба</th>
+      <th scope="col">Тегло</th>
+      <th scope="col">Размер</th>
+       <th scope="col">Снимка</th>
+         <th scope="col">Информация</th>
+      
+    </tr>
+  </thead>
+  <tbody >
+  <tr th:each="journal : ${journals}" >
+   
+   <td><p th:text="${journal.userName}"></p></td>
+     <td><p th:text="${journal.fishName}"></p></td>
+      <td><p th:text="${journal.weight}"></p></td>
+        <td><p th:text="${journal.size}"></p></td>
+         <td><img th:src="${journal.path}" class="img-responsive" style="width:100%;" alt="..."></td>
+          <td><p style="width:100%;" th:text="${journal.info}"></p></td>
+         <td>
+      <button class="btn" th:onclick="'removeJournal(' + ${journal.id} + ')'"><i class="fa fa-trash"></i> Отхвърляне</button>
+      <button class="btn" th:onclick="'acceptJournal(' + ${journal.id} + ')'"><i class="fas fa-edit"></i> Приемане</button>
+      </td>
+   </tr>
+   
+  </tbody>
+</table>
+
+</div>
+
+
+
+    </div>
+
+
+
+
+
+<script src="/js/browseUnmoderated.js"></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

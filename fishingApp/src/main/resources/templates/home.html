@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+    <title>Simple Map</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v6.5.0/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+        <link rel="stylesheet" media="screen" th:href="@{/css/home.css}"/>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+   
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css'>
+	<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.btn {
+
+  cursor: pointer;
+   position: -webkit-sticky; /* Safari */
+
+   width: 100%;
+  top: 0;
+}
+
+#sidedrop{
+width: 100%;
+
+    
+}
+
+
+
+
+
+
+#myInput {
+  box-sizing: border-box;
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+
+	  
+ 
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+     width: 90%;
+
+  border: 1px solid #ddd;
+  z-index: 1;
+  
+
+
+	
+}  
+	  
+.link-list{ 
+	overflow: scroll;
+    height: 70vh;  
+    
+     background-color: #2234ae;
+background-image: linear-gradient(315deg, #2234ae 0%, #191714 74%);
+    
+    
+	  }
+	  
+	 .link-list::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}	
+	  
+
+  
+  
+  
+
+
+.dropdown-content a {
+ font-size: 14px;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+   word-wrap: break-word;
+ 
+}
+
+
+
+.show {display: block;}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+ height: auto;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+ background-color: #2234ae;
+background-image: linear-gradient(315deg, #2234ae 0%, #191714 74%);
+
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+ width: 90%;
+    height: auto;
+    max-height: 100%;
+}
+
+
+/* Sidenav */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav #sidenavList a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.toggle-btn {
+  position: relative;
+  display: block;
+margin-left: 0px;
+  color: white;
+  width: 22%;
+height:auto;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.arrow {
+  position: absolute;
+  top: 20px;
+
+}
+
+.arrow::before,
+.arrow::after {
+  position: relative;
+  content: '';
+  display: block;
+  width: 10px;
+  height: 1px;
+  background: white;
+  transition: 0.3s ease-in-out;
+}
+
+.arrow::before {
+  transform: rotate(45deg);
+}
+
+.arrow::after {
+  left: 6px;
+  top: -1px;
+  transform: rotate(-45deg);
+}
+
+
+
+
+.toggle-btn.active .arrow::before {
+  transform: rotate(-45deg);
+}
+
+.toggle-btn.active .arrow::after {
+  transform: rotate(45deg);
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+  </head>
+  <body>
+  
+  
+ 
+  <header id="head">
+  
+	<div th:replace="layout :: header">
+	</div>
+	</header>
+	
+	
+	
+	 <!--- Sidenav --->
+	  <div class="sidenav border" id="mySidenav">
+	   
+	   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="dropdown" id="sidedrop">
+        
+        <button class="btn btn-dark  dropdown-toggle" onclick="myFunction()" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Изберете водоем
+  </button>
+
+  <div id="myDropdown" class="dropdown-content" >
+  <div>
+    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"  autocomplete="off">
+ </div>
+ 
+  <div class="link-list">
+    <a class="dropdown-item text-white"   th:each="water : ${waters}"  th:text="${water.name}"   th:onclick="'javascript:dispatch(' + ${water.latitude}+','+ ${water.longtitude} + ')'">
+    
+    
+    </a>
+  </div>
+  </div>
+</div>
+
+<div id="sidenavList">
+
+
+        <ul id="emptyList" th:each="fish : ${fishList}">
+        
+        <li>
+        <a  th:text="${fish.name}" style="color: white;" th:href="@{'/info/fishInfo?fish=' + ${fish.name}}"></a>
+       
+			</li> 
+			<img   th:src="${fish.path}" th:id="${fish.id}"  th:onclick="'modalChange(' + ${fish.id} + ')'" class="img-responsive" style="width:150px;" >
+        </ul>
+        </div>
+    </div>
+	<!--# Sidenav #-->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  <div id="myModal" class="modal">
+<img class="modal-content" id="img01">
+</div>
+
+  <div class="flex-container">
+ 
+ 
+  
+    <div class="content">
+       <div id="map" class="map"></div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+	  <img id="popup-content-img" src=""></img>
+      <div id="popup-content"></div>
+	     
+    </div>
+    </div>
+</div>
+  
+  
+  <!--- Footer --->
+	<footer id="foot">
+		<div class="jumbotron jumbotron-fluid  p-0  ml-0 mt-0 mb-0" style="background-color: #2a2a72;
+        background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)">
+			<div class="container containerFoot d-flex justify-content-center">
+			
+			
+			<a class="toggle-btn active" href="#head">
+<i class="arrow"></i>
+
+</a>
+			
+			
+		
+				<div class="row">
+					
+
+					<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 cizgi">
+						<div class="card bg-transparent border-0">
+							<div class="card-body text-light text-center">
+								
+									
+									<h5 class="card-title text-white display-4" style="font-size:30px">Дипломен проект</h5>
+									
+							<p class="d-inline lead">Кристиян Георгиев Златковски © 2021<br>
+							<a href="#" class="text-light d-block lead">Риболов</a>
+							</p>
+	
+							</div>
+						</div>
+					</div>
+					
+					
+			
+					
+					
+					
+					
+					
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 cizgi">
+						<div class="card bg-transparent border-0">
+							<div class="card-body text-center">
+							<a href="#foot" class="text-light d-block lead"></a>
+								<h5 class="card-title text-white display-4" style="font-size:30px">Контакти</h5>
+								<a class="text-light d-block lead"    onclick="copyToClipboard('0889759600')"       style="margin-left: -20px" href="#"><i class="fa fa-phone mr-2"></i>0889759600</a>
+								<a class="text-light d-block lead" onclick="copyToClipboard('fish_app@localhost.com')" href="#"><i class="fa fa-envelope mr-2"></i>fish_app@localhost.com</a>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+						<div class="card bg-transparent border-0">
+							<div class="card-body text-center">
+						
+							
+							<h5 class="card-title text-white display-4" style="font-size:30px">Социални мрежи</h5>
+					
+									<a class="text-light" href="https://www.facebook.com/kristian.zlatkovski/"><i class="fab fa-facebook-square fa-fw fa-2x"></i></a>
+								
+									<a class="text-light" href="https://twitter.com/agunimonx1"><i class="fab fa-twitter-square fa-fw fa-2x"></i></a>
+								
+									<a class="text-light" href="https://www.instagram.com/"><i class="fab fa-instagram fa-fw fa-2x"></i></a>
+								
+									<a class="text-light" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-fw fa-2x"></i></a>
+								
+							</div>
+						</div>
+					</div>	
+					
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--# Footer #-->
+  
+  
+  
+  
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+	
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+</script>  
+  
+  
+  
+  
+<script th:inline="javascript">
+
+var waters = [[${waters}]];
+
+</script> 
+  
+ <script th:inline="javascript">
+
+
+
+var fishes = [[${fishes}]];
+
+
+</script> 
+
+
+
+
+ 
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+	  
+	document.getElementById('sidenavPop').style.display = "block";
+	$('.toggle-btn').on('click', function() {
+		  $(this).toggleClass('active')
+		  $(this).attr('href',$(this).attr('href') == '#head' ? '#foot' : '#head');
+		});
+  });
+
+
+
+function dispatch(lat,longt) {
+	
+	
+	myFunction();
+var evt = {};
+evt.type = 'singleclick';
+evt.coordinate = [];
+evt.coordinate[1] = lat;
+evt.coordinate[0] = longt;
+var transCord=ol.proj.fromLonLat(evt.coordinate);
+evt.coordinate=transCord;
+map.dispatchEvent(evt);
+}
+
+
+
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+ 
+var modalImg = document.getElementById("img01");
+
+function modalChange(id){
+    modal.style.display = "block";
+    modalImg.src = document.getElementById(id).src;
+   
+}
+
+
+
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+	function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
+
+// When the user clicks on <span> (x), close the modal
+modal.onclick = function() {
+    img01.className += " out";
+    setTimeout(function() {
+       modal.style.display = "none";
+       img01.className = "modal-content";
+     }, 400);
+    
+ }    
+function copyToClipboard(text) {
+	  window.prompt("Копиране в клипборда: Ctrl+C, Enter", text);
+	} 
+</script>
+<script src="/js/home.js"></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+  </body>
+</html>

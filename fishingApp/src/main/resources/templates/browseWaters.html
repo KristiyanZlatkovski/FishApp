@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+           <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" media="screen" th:href="@{/css/stickyHeader.css}" />
+    <link rel="stylesheet" media="screen" th:href="@{/css/browseWater.css}" />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta charset="UTF-8">
+ 	
+ 	
+</head>
+<body>
+
+
+<header class="header sticky">
+<div th:replace="layout :: header">
+	</div>
+</header>
+
+
+
+
+<div class="content">
+
+
+
+<table class="table mt-5" id="myTable">
+   <thead>
+ <tr style="width: 100%; font-size: 25px;">
+    <th colspan="2">
+     <div class="wooden-text">
+    Списък с водоеми
+    </div>
+
+    
+    </th>
+  
+  <tr >
+  
+  <th colspan="2">
+    
+    <input type="text" autocomplete="off" id="myInput" onkeyup="myFunction()" placeholder="Търсене по име.." title="Type in a name">
+    
+    </th>
+    
+  </tr>
+   </thead>
+    <tbody>
+  <tr th:each="water : ${waters}">
+  
+  
+  
+    <td>
+       <div class="frame">
+    <img th:src="${water.path}" class="img-responsive"  alt="...">
+     </div>
+    </td>
+     <td>
+  <div class="wooden-text">
+     <a th:text="${water.name}" style="color: white" th:href="@{'/info/waterInfo?water=' + ${water.name}}"></a>
+     </div>
+     
+     
+     </td>
+ 
+    </tr>
+         </tbody>
+</table>
+
+</div>
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+</body>
+</html>

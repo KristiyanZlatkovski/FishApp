@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+    <title>Simple Map</title>
+
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+        <link rel="stylesheet" media="screen" th:href="@{/css/home.css}"/>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css'>
+         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css'>
+   
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css'>
+	<meta charset="UTF-8">
+
+  </head>
+  <body>
+  
+  
+ 
+  <header >
+  <div th:fragment="header" >
+	<!--- Navbar --->
+	<nav class="navbar navbar-expand-lg  border navbar-dark "  style="background-color: #2a2a72;
+    background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)">
+    
+    
+	   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+	   <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+         <a class="nav-item mr-auto text-white" style="display:none;font-size:30px;cursor:pointer" id="sidenavPop"      onclick="openNav()">&#9776;</a>
+            </li>
+	   </ul>
+	    </div>
+			
+			
+			 <div class="mx-auto order-0">
+			
+			
+			<a class="navbar-brand text-white" href="#"><i class="fas fa-fish fa-lg mr-2"></i>Риболовни Дневници</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2" aria-controls="nvbCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			  </div>
+			
+			
+		 <div class="navbar-collapse collapse w-100 order-3 dual-collapse2"  id="nvbCollapse">
+				<ul class="navbar-nav ml-auto" >
+					<li class="nav-item pl-1">
+						<a class="nav-link text-white" href="/"><i class="fa fa-home fa-fw mr-1"></i>Начална страница</a>
+					</li>
+					
+					
+			
+					
+					
+					
+					
+                    
+					
+					
+					
+					
+					
+					
+					<li class="nav-item dropdown pl-1 d-block d-md-none">
+        <a class="nav-link dropdown-toggle text-white"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            
+          Меню
+  </a>
+        <div class="dropdown-menu dropdown-menu-right pull-right bg-transparent border-0 " aria-labelledby="navbarDropdown" >
+        
+        
+          <a class="dropdown-item text-white" href="/info/browseFishList">Списък на риби</a>
+          <a class="dropdown-item text-white" href="/info/browseWaterList">Списък с водоеми</a>
+          <div class="dropdown-divider" sec:authorize="isAuthenticated()"></div>
+          <a class="dropdown-item text-white" href="/journal/makeLog" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Създаване на запис</a>
+          <a class="dropdown-item text-white" href="/journal/browseLogs" sec:authorize="isAuthenticated()">Преглед на записи</a>
+          <a class="dropdown-item text-white" href="/fishProposal" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Предлагане на нов вид риба</a>
+          <a class="dropdown-item text-white" href="/waterProposal" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Предлагане на нов водоем</a>
+          <a class="dropdown-item text-white" href="/fishToWaterProp" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Предлагане на вид риба за даден водоем</a>
+      
+        <div class="dropdown-divider" sec:authorize="isAuthenticated()"></div>
+         <a class="dropdown-item text-white" href="/info/browseTournaments" sec:authorize="isAuthenticated()">Турнири</a>
+  
+        
+        
+          <div class="dropdown-divider" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')"></div>
+          
+          
+         
+         <a class="dropdown-item text-white" href="/moderate/browseUnmoderated" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">Модерация</a>
+
+          
+          <div class="dropdown-divider" sec:authorize="hasRole('ROLE_ADMIN')"></div>
+                  <a class="dropdown-item text-white" href="/admin/listUsers" sec:authorize="hasRole('ROLE_ADMIN')">Преглед на списъка с потребители</a>
+          <a class="dropdown-item text-white" href="/admin/proposals/browseProposals" sec:authorize="hasRole('ROLE_ADMIN')">Преглед на предложения</a>
+          <a class="dropdown-item text-white" href="/admin/tournament/makeTournament" sec:authorize="hasRole('ROLE_ADMIN')">Добавяне на турнир</a>
+          <a class="dropdown-item text-white" href="/admin/manageWaters/addFishToWater" sec:authorize="hasRole('ROLE_ADMIN')">Добавяне на риба към водоем</a>
+          <a class="dropdown-item text-white" href="/admin/manageFishes/addBaitToFish" sec:authorize="hasRole('ROLE_ADMIN')">Добавяне на примамка към риба</a>
+          
+        </div>
+        
+          </li>
+        
+        <li class="nav-item dropdown pl-1 d-none d-md-block" >
+        <a class="nav-link dropdown-toggle text-white"  id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            
+          Меню
+  </a>
+           <div class="dropdown-menu dropdown-menu-right pull-right border-0   " aria-labelledby="navbarDropdown1" >
+        
+        
+          <a class="dropdown-item " href="/info/browseFishList">Списък на риби</a>
+          <a class="dropdown-item " href="/info/browseWaterList">Списък с водоеми</a>
+          <div class="dropdown-divider" sec:authorize="isAuthenticated()"></div>
+          <a class="dropdown-item " href="/journal/makeLog" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Създаване на запис</a>
+          <a class="dropdown-item " href="/journal/browseLogs" sec:authorize="isAuthenticated()">Преглед на записи</a>
+          <a class="dropdown-item " href="/fishProposal" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Предлагане на нов вид риба</a>
+          <a class="dropdown-item " href="/waterProposal" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Предлагане на нов водоем</a>
+          <a class="dropdown-item " href="/fishToWaterProp" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR','ROLE_USER')">Предлагане на вид риба за даден водоем</a>
+      
+        <div class="dropdown-divider" sec:authorize="isAuthenticated()"></div>
+         <a class="dropdown-item " href="/info/browseTournaments" sec:authorize="isAuthenticated()">Турнири</a>
+  
+        
+        
+          <div class="dropdown-divider" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')"></div>
+          
+          
+          <a class="dropdown-item " href="/moderate/browseUnmoderated" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">Модерация</a>
+       
+          
+          <div class="dropdown-divider" sec:authorize="hasRole('ROLE_ADMIN')"></div>
+           <a class="dropdown-item " href="/admin/listUsers" sec:authorize="hasRole('ROLE_ADMIN')">Преглед на списъка с потребители</a>
+          <a class="dropdown-item " href="/admin/proposals/browseProposals" sec:authorize="hasRole('ROLE_ADMIN')">Преглед на предложения</a>
+          <a class="dropdown-item " href="/admin/tournament/makeTournament" sec:authorize="hasRole('ROLE_ADMIN')">Добавяне на турнир</a>
+          <a class="dropdown-item " href="/admin/manageWaters/addFishToWater" sec:authorize="hasRole('ROLE_ADMIN')">Добавяне на риба към водоем</a>
+          <a class="dropdown-item " href="/admin/manageFishes/addBaitToFish" sec:authorize="hasRole('ROLE_ADMIN')">Добавяне на примамка към риба</a>
+        </div>
+        
+   
+      </li>
+					
+					<li class="nav-item pl-1" sec:authorize="!isAuthenticated()" >
+						<a class="nav-link text-white" href="/registration"><i class="fa fa-user-plus fa-fw mr-1"></i>Регистрация</a>
+					</li>
+					
+					<li class="nav-item pl-1" sec:authorize="!isAuthenticated()">
+						<a class="nav-link text-white" href="/login"><i class="fas fa-sign-in-alt"></i>Вход</a>
+					</li>
+					<li class="nav-item pl-1" sec:authorize="isAuthenticated()">
+						 <form id="logoutForm" method="POST" th:action="@{/logout}">
+           			 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+       		        	 </form>
+						<a class="nav-link text-white" onclick="document.forms['logoutForm'].submit()"><i class="fas fa-sign-out-alt"></i>Отписване</a>
+					</li>
+					
+					
+					
+					
+					
+					
+				</ul>
+			</div>
+		
+	</nav>
+	<!--# Navbar #-->
+	</div>
+	</header>
+  
+
+  
+
+
+
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0-next.1/esm/popper.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+
+
+
+
+  </body>
+</html>
