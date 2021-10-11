@@ -1,6 +1,6 @@
 # FishApp
 
-
+Change Language: [English](README.md),[Bulgarian](README.bg.md)
 
 ### Overview.    
 This is a project I created for my Master's degree. The web application allows visitors to acquire information about the different species of fish that can be found in all the water reservoirs on the territory of Bulgaria. Registered users can create and save their fishing journals, containing information about the fish they caught, 
