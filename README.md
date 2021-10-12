@@ -12,8 +12,10 @@ IDE- The web application was created using Eclipse ide for java developers 2021-
 Build automation tool- Maven  
 Backend (or “server-side”) - Spring Boot 2.5.4.  
 Front end (or “client-side”) - For the vision of the app, I used a combination of Thymeleaf, HTML, CSS, Javascript, Bootstrap, JQuery.  
+Protection - For protection from unauthorized access we use Spring Security, which gives access to the system only to those with the required privileges.  
+Embedded server - Apache Tomcat. 
 HTTP requests - I made the requests from the client to the server-side using Asynchronous JavaScript and XML or Ajax.  
-Database - MySQL
+Database - MySQL  
 
 ### Instalation.
 Clone the project repository and import it into the preferred IDE.
