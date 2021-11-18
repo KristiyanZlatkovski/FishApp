@@ -9,12 +9,11 @@ public interface BaitService {
 
 
     Bait findByName(String name);
-    
-   
 
-	ArrayList<Bait> findAll();
 
-	ArrayList<Bait> findAllByFishes(Fish fish);
+    ArrayList<Bait> findAll();
 
-	Bait findById(long baitId);
+    ArrayList<Bait> findAllByFishes(Fish fish);
+
+    Bait findById(long baitId);
 }

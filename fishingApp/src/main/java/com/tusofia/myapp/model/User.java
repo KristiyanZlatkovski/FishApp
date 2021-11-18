@@ -1,9 +1,7 @@
 package com.tusofia.myapp.model;
 
 
-
 import javax.persistence.*;
-
 
 
 @Entity
@@ -14,34 +12,31 @@ public class User {
     private Long id;
 
     private String username;
-    
+
     private String nickname;
 
     private String password;
-    
+
     private String email;
 
     public String getEmail() {
-		return email;
-	}
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@Transient
+    @Transient
     private String passwordConfirm;
-	
-
 
 
     @ManyToOne
-    @JoinColumn(name="role_id")
+    @JoinColumn(name = "role_id")
     private Role roles;
 
 
-
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -81,11 +76,11 @@ public class User {
         this.roles = roles;
     }
 
-	public String getNickname() {
-		return nickname;
-	}
+    public String getNickname() {
+        return nickname;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

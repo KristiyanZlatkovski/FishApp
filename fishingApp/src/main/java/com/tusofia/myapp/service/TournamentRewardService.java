@@ -6,8 +6,8 @@ import com.tusofia.myapp.model.Tournament;
 import com.tusofia.myapp.model.TournamentRewards;
 
 public interface TournamentRewardService {
-	
-	
-	ArrayList<TournamentRewards> findAllByTournament(Tournament tournament);
+
+
+    ArrayList<TournamentRewards> findAllByTournament(Tournament tournament);
 
 }

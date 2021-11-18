@@ -20,11 +20,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
-    
+
     @Bean
     RequestRejectedHandler requestRejectedHandler() {
- 
-       return new HttpStatusRequestRejectedHandler();
+
+        return new HttpStatusRequestRejectedHandler();
     }
 
     @Bean
@@ -34,20 +34,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-   
+
         http
-            .authorizeRequests()
-                .antMatchers("/images/**","/css/**","/uploads/**", "/js/**",
-                		"/registration","/","/home","/info/browseFishList","/info/browseWaterList","/info/waterInfo","/info/fishInfo","/getFishesByWater").permitAll()
+                .authorizeRequests()
+                .antMatchers("/images/**", "/css/**", "/uploads/**", "/js/**",
+                        "/registration", "/", "/home", "/info/browseFishList", "/info/browseWaterList", "/info/waterInfo", "/info/fishInfo", "/getFishesByWater").permitAll()
                 .antMatchers("/admin/*").hasRole("ADMIN")
-                .antMatchers("/moderate/*").hasAnyRole("ADMIN","MODERATOR")
+                .antMatchers("/moderate/*").hasAnyRole("ADMIN", "MODERATOR")
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .and()
-            .logout()
+                .logout()
                 .permitAll();
     }
 

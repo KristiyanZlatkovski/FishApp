@@ -14,39 +14,33 @@ import com.tusofia.myapp.repository.BaitRepository;
 public class BaitServiceImpl implements BaitService {
     @Autowired
     private BaitRepository baitRepository;
- 
 
 
-
-	@Override
-	public ArrayList<Bait> findAll() {
-		// TODO Auto-generated method stub
-		return baitRepository.findAll();
-	}
-
+    @Override
+    public ArrayList<Bait> findAll() {
+        // TODO Auto-generated method stub
+        return baitRepository.findAll();
+    }
 
 
-
-	@Override
-	public Bait findByName(String name) {
-		// TODO Auto-generated method stub
-		return baitRepository.findByName(name);
-	}
-
+    @Override
+    public Bait findByName(String name) {
+        // TODO Auto-generated method stub
+        return baitRepository.findByName(name);
+    }
 
 
+    @Override
+    public Bait findById(long baitId) {
 
-	@Override
-	public Bait findById(long baitId) {
-		
-		return baitRepository.findById(baitId).get();
-	}
-	
-	
-	@Override
-	public ArrayList<Bait> findAllByFishes(Fish fish) {
-	
-		return baitRepository.findAllByFishes(fish);
-	}
-	
+        return baitRepository.findById(baitId).get();
+    }
+
+
+    @Override
+    public ArrayList<Bait> findAllByFishes(Fish fish) {
+
+        return baitRepository.findAllByFishes(fish);
+    }
+
 }
