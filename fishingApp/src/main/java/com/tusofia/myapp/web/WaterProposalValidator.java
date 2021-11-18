@@ -19,26 +19,22 @@ public class WaterProposalValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-    	WaterProp waterProp = (WaterProp) o;
+        WaterProp waterProp = (WaterProp) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty");
-        
-        
+
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "latitude", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "longtitude", "NotEmpty");
-        
-        if (waterProp.getLatitude() <=0 ) {
+
+        if (waterProp.getLatitude() <= 0) {
             errors.rejectValue("latitude", "Location.waterProp.latitude");
         }
-        
-        if (waterProp.getLongtitude()  <=0) {
+
+        if (waterProp.getLongtitude() <= 0) {
             errors.rejectValue("longtitude", "Location.waterProp.longtitude");
         }
-        
-     
-        
-        
-        
-        
+
+
     }
 }

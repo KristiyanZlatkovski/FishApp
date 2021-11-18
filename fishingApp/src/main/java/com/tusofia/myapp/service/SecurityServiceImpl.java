@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SecurityServiceImpl implements SecurityService{
+public class SecurityServiceImpl implements SecurityService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -25,7 +25,7 @@ public class SecurityServiceImpl implements SecurityService{
     public boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || AnonymousAuthenticationToken.class.
-            isAssignableFrom(authentication.getClass())) {
+                isAssignableFrom(authentication.getClass())) {
             return false;
         }
         return authentication.isAuthenticated();

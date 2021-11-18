@@ -7,12 +7,15 @@ import com.tusofia.myapp.model.Fish;
 import com.tusofia.myapp.model.Water;
 
 public interface FishService {
-	  Fish findByName(String name);
-	  
-		ArrayList<Fish> findAllByWaters(Water water);
-		ArrayList<Fish> findAllByWatersNot(Water water);
-		List<Fish> findAll();
-		Fish findById(Long id);
+    Fish findByName(String name);
 
-		void save(Fish fish);
+    ArrayList<Fish> findAllByWaters(Water water);
+
+    ArrayList<Fish> findAllByWatersNot(Water water);
+
+    List<Fish> findAll();
+
+    Fish findById(Long id);
+
+    void save(Fish fish);
 }

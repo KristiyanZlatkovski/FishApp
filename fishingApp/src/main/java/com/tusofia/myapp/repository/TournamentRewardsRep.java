@@ -9,10 +9,8 @@ import com.tusofia.myapp.model.Tournament;
 import com.tusofia.myapp.model.TournamentRewards;
 
 
+public interface TournamentRewardsRep extends JpaRepository<TournamentRewards, Long> {
 
+    ArrayList<TournamentRewards> findAllByTournament(Tournament tournament, Sort sort);
 
-public interface TournamentRewardsRep extends JpaRepository<TournamentRewards, Long>{
-	
-	ArrayList<TournamentRewards> findAllByTournament(Tournament tournament,Sort sort);
-	
 }

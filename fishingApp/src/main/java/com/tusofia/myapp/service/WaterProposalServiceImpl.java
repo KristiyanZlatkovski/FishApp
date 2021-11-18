@@ -11,47 +11,45 @@ import com.tusofia.myapp.repository.WaterProposalRep;
 
 
 @Service
-public class WaterProposalServiceImpl implements  WaterProposalService{
+public class WaterProposalServiceImpl implements WaterProposalService {
 
-	 @Autowired
-	    private WaterProposalRep waterPropRep;
-	 
-	 
-	 
-	 
-	@Override
-	public void save(WaterProp waterProp) {
-		waterPropRep.save(waterProp);
-		
-	}
+    @Autowired
+    private WaterProposalRep waterPropRep;
 
-	@Override
-	public ArrayList<WaterProp> findAll() {
-		
-		return waterPropRep.findAll();
-	}
 
-	@Override
-	public void deleteById(Long id) {
-	waterPropRep.deleteById(id);
-		
-	}
+    @Override
+    public void save(WaterProp waterProp) {
+        waterPropRep.save(waterProp);
 
-	@Override
-	public WaterProp findById(Long id) {
-	
-		return waterPropRep.getById(id);
-	}
+    }
 
-	@Override
-	public Water proposalToRecord(WaterProp prop) {
-		 Water water=new Water();
-	        water.setLatitude(prop.getLatitude());
-			water.setLongtitude(prop.getLongtitude());
-			water.setName(prop.getName());
-			water.setPath(prop.getPath());
-			water.setInfo(prop.getWaterInfo());
-			return water;
-	}
+    @Override
+    public ArrayList<WaterProp> findAll() {
+
+        return waterPropRep.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        waterPropRep.deleteById(id);
+
+    }
+
+    @Override
+    public WaterProp findById(Long id) {
+
+        return waterPropRep.getById(id);
+    }
+
+    @Override
+    public Water proposalToRecord(WaterProp prop) {
+        Water water = new Water();
+        water.setLatitude(prop.getLatitude());
+        water.setLongtitude(prop.getLongtitude());
+        water.setName(prop.getName());
+        water.setPath(prop.getPath());
+        water.setInfo(prop.getWaterInfo());
+        return water;
+    }
 
 }

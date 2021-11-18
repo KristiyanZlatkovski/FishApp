@@ -5,156 +5,153 @@ import java.util.Date;
 import javax.persistence.*;
 
 
-
-
-
 @Entity
 @Table(name = "journal")
 public class FishJournal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
- 
-    @ManyToOne(targetEntity =User.class)
-	@JoinColumn(name="user_id", referencedColumnName = "id")
+
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User users;
-    
-  
-    @ManyToOne(targetEntity =Fish.class)
-   	@JoinColumn(name="fish_id", referencedColumnName = "id")
+
+
+    @ManyToOne(targetEntity = Fish.class)
+    @JoinColumn(name = "fish_id", referencedColumnName = "id")
     private Fish fishes;
-    
-  
-    @ManyToOne(targetEntity =Water.class)
-   	@JoinColumn(name="water_id", referencedColumnName = "id")
+
+
+    @ManyToOne(targetEntity = Water.class)
+    @JoinColumn(name = "water_id", referencedColumnName = "id")
     private Water waters;
-    
-  
-    @ManyToOne(targetEntity =Bait.class)
-   	@JoinColumn(name="bait_id", referencedColumnName = "id")
+
+
+    @ManyToOne(targetEntity = Bait.class)
+    @JoinColumn(name = "bait_id", referencedColumnName = "id")
     private Bait baits;
-    
+
 
     private double size;
-    
+
 
     private double weight;
-    
-    
+
+
     Date date;
-    
+
     String info;
     String path;
-    
+
     boolean shared;
-    
-   
+
+
     boolean isEligibleForTourney;
-    
+
     boolean isModerated;
-    
-	public boolean isModerated() {
-		return isModerated;
-	}
 
-	public void setModerated(boolean isModerated) {
-		this.isModerated = isModerated;
-	}
+    public boolean isModerated() {
+        return isModerated;
+    }
 
-	public double getSize() {
-		return size;
-	}
+    public void setModerated(boolean isModerated) {
+        this.isModerated = isModerated;
+    }
 
-	public void setSize(double size) {
-		this.size = size;
-	}
+    public double getSize() {
+        return size;
+    }
 
-	public double getWeight() {
-		return weight;
-	}
+    public void setSize(double size) {
+        this.size = size;
+    }
 
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
+    public double getWeight() {
+        return weight;
+    }
 
-	public boolean isEligibleForTourney() {
-		return isEligibleForTourney;
-	}
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 
-	public void setEligibleForTourney(boolean isEligibleForTourney) {
-		this.isEligibleForTourney = isEligibleForTourney;
-	}
+    public boolean isEligibleForTourney() {
+        return isEligibleForTourney;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public void setEligibleForTourney(boolean isEligibleForTourney) {
+        this.isEligibleForTourney = isEligibleForTourney;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public boolean isShared() {
-		return shared;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public void setShared(boolean shared) {
-		this.shared = shared;
-	}
+    public boolean isShared() {
+        return shared;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setShared(boolean shared) {
+        this.shared = shared;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public User getUsers() {
-		return users;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setUsers(User users) {
-		this.users = users;
-	}
+    public User getUsers() {
+        return users;
+    }
 
-	public Fish getFishes() {
-		return fishes;
-	}
+    public void setUsers(User users) {
+        this.users = users;
+    }
 
-	public void setFishes(Fish fishes) {
-		this.fishes = fishes;
-	}
+    public Fish getFishes() {
+        return fishes;
+    }
 
-	public Water getWaters() {
-		return waters;
-	}
+    public void setFishes(Fish fishes) {
+        this.fishes = fishes;
+    }
 
-	public void setWaters(Water waters) {
-		this.waters = waters;
-	}
+    public Water getWaters() {
+        return waters;
+    }
 
-	public Bait getBaits() {
-		return baits;
-	}
+    public void setWaters(Water waters) {
+        this.waters = waters;
+    }
 
-	public void setBaits(Bait baits) {
-		this.baits = baits;
-	}
+    public Bait getBaits() {
+        return baits;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public void setBaits(Bait baits) {
+        this.baits = baits;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public String getInfo() {
-		return info;
-	}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	public void setInfo(String info) {
-		this.info = info;
-	}
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 }

@@ -19,80 +19,78 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(columnDefinition = "text")
     private String body;
-    
-    @ManyToOne(targetEntity =User.class)
-   	@JoinColumn(name="user_id", referencedColumnName = "id")
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User users;
-    
+
     private Long parentId;
-    
+
     private String parentType;
-    
+
     private Date date;
-    
+
     @NonNull
     boolean isModerated;
-    
-	public boolean isModerated() {
-		return isModerated;
-	}
 
-	public void setModerated(boolean isModerated) {
-		this.isModerated = isModerated;
-	}
+    public boolean isModerated() {
+        return isModerated;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setModerated(boolean isModerated) {
+        this.isModerated = isModerated;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getBody() {
-		return body;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public User getUsers() {
-		return users;
-	}
+    public void setBody(String body) {
+        this.body = body;
+    }
 
-	public void setUsers(User users) {
-		this.users = users;
-	}
+    public User getUsers() {
+        return users;
+    }
 
-	public Long getParentId() {
-		return parentId;
-	}
+    public void setUsers(User users) {
+        this.users = users;
+    }
 
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
+    public Long getParentId() {
+        return parentId;
+    }
 
-	public String getParentType() {
-		return parentType;
-	}
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
-	public void setParentType(String parentType) {
-		this.parentType = parentType;
-	}
+    public String getParentType() {
+        return parentType;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public void setParentType(String parentType) {
+        this.parentType = parentType;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-    
-    
-    
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
 
 }

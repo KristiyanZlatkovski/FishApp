@@ -7,11 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tusofia.myapp.model.FishProp;
 
 
+public interface FishProposalRep extends JpaRepository<FishProp, Long> {
 
 
-public interface FishProposalRep extends JpaRepository<FishProp, Long>{
-	
-	
-	 ArrayList<FishProp> findAll();
-	
+    ArrayList<FishProp> findAll();
+
 }

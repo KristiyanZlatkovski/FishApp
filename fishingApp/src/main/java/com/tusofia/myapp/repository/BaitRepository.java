@@ -8,9 +8,10 @@ import com.tusofia.myapp.model.Bait;
 import com.tusofia.myapp.model.Fish;
 
 
-
 public interface BaitRepository extends JpaRepository<Bait, Long> {
     Bait findByName(String name);
-	ArrayList<Bait> findAllByFishes(Fish fish);
-	ArrayList<Bait> findAll();
+
+    ArrayList<Bait> findAllByFishes(Fish fish);
+
+    ArrayList<Bait> findAll();
 }

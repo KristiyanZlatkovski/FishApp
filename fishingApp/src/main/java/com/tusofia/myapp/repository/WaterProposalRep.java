@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tusofia.myapp.model.WaterProp;
 
-public interface WaterProposalRep extends JpaRepository<WaterProp, Long>{
-	
-	
-	 ArrayList<WaterProp> findAll();
-	
+public interface WaterProposalRep extends JpaRepository<WaterProp, Long> {
+
+
+    ArrayList<WaterProp> findAll();
+
 }

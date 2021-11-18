@@ -1,7 +1,6 @@
 package com.tusofia.myapp.web;
 
 
-
 import java.util.ArrayList;
 
 
@@ -33,29 +32,23 @@ import com.tusofia.myapp.service.UserService;
 import com.tusofia.myapp.service.WaterService;
 
 
-
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private WaterService waterService;
-    
+
     @Autowired
     private FishService fishService;
-    
+
     @Autowired
     private SecurityService securityService;
-    
- 
-    
-    
+
     @Autowired
     private UserValidator userValidator;
-    
-   
-    
+
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -68,8 +61,7 @@ public class UserController {
         return "registration";
     }
 
-    
-    
+
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
@@ -81,25 +73,22 @@ public class UserController {
         userService.save(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-        
-        
+
 
         return "redirect:/registration/succes";
     }
-    
-    
+
+
     @GetMapping("/registration/succes")
     public String registrationSucces(Model model) {
-    
 
-        model.addAttribute("successMessage","Поздравления вие се регистрирахте успешно");
-        model.addAttribute("redirectLink","/home");
-     
+
+        model.addAttribute("successMessage", "Поздравления вие се регистрирахте успешно");
+        model.addAttribute("redirectLink", "/home");
+
         return "succes";
     }
-    
-    
-    
+
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
@@ -116,77 +105,42 @@ public class UserController {
         return "login";
     }
 
- 
-    
+
     @GetMapping({"/home"})
     public String home(Model model) {
-    	model.addAttribute("waters", waterService.findAll());
-    	model.addAttribute("fishList", new ArrayList<Fish>());
+        model.addAttribute("waters", waterService.findAll());
+        model.addAttribute("fishList", new ArrayList<Fish>());
         return "home";
     }
-    
-    
+
+
     @GetMapping({"/"})
     public String homeShort() {
-    
+
         return "redirect:/home";
     }
-    
-    
-   
-    
-    
-    
-    
+
+
     @GetMapping(value = "/getFishesByWater")
 
-	public String findAllFishesByWater(@RequestParam String name,Model model) {
-		
-    	Water waters=waterService.findByName(name);
-    	  model.addAttribute("fishList", fishService.findAllByWaters(waters));
-    	
-    	
-    return "home :: #sidenavList";
-		
-	}
-   
-  
-    
-    
-    
-   
+    public String findAllFishesByWater(@RequestParam String name, Model model) {
 
-   
-   	
+        Water waters = waterService.findByName(name);
+        model.addAttribute("fishList", fishService.findAllByWaters(waters));
 
- 
-        	
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
- 
-    
-   	
-  
-    	
-   
-    
-    @ExceptionHandler(Exception.class)
-    public @ResponseBody String handleException(Exception e, HttpServletRequest request, HttpServletResponse response) {
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return e.getMessage();
+
+        return "home :: #sidenavList";
 
     }
-    
+
+
+    @ExceptionHandler(Exception.class)
+    public @ResponseBody
+    String handleException(Exception e, HttpServletRequest request, HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return e.getMessage();
+    }
+
 
 }	
     

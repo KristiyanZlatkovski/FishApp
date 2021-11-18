@@ -11,8 +11,9 @@ import com.tusofia.myapp.model.Water;
 
 public interface FishRepository extends JpaRepository<Fish, Long> {
     Fish findByName(String name);
- 
-	ArrayList<Fish> findAllByWaters(Water water);
-	ArrayList<Fish> findAllByWatersNot(Water water);
-	
+
+    ArrayList<Fish> findAllByWaters(Water water);
+
+    ArrayList<Fish> findAllByWatersNot(Water water);
+
 }

@@ -22,114 +22,103 @@ import com.tusofia.myapp.service.WaterService;
 @Controller
 @RequestMapping("/info")
 public class InfoController {
-	  @Autowired
-	    private FishService fishService;
-	 
-	  @Autowired
-	    private WaterService waterService;
-	
-	  
-	  @Autowired
-	    private CommentService commentService;
-	  
-	    @Autowired
-	    private TournamentService tournamentService;
-	    
-	    @Autowired
-	    private JournalService journalService;
-	  
-	   @GetMapping("/fishInfo")
-	    public String getFishInfo(@RequestParam String fish,Model model) {
-	      Fish fish1=fishService.findByName(fish);
-	        model.addAttribute("waters",waterService.findAllByFish(fish1));
-	    	model.addAttribute("fish", fish1);
-	    	model.addAttribute("comments" ,commentService.findAllByParentIdAndParentType(fish1.getId(), "fish"));
-	      	model.addAttribute("comment" ,new Comment());
-	      	
-	        return "fishInfo";
-	    }	
-	
-	
-	   @GetMapping("/browseFishList")
-	    public String fishList(Model model) {
-	      
-	    
-	        
-	    	model.addAttribute("fishes", fishService.findAll() );
+    @Autowired
+    private FishService fishService;
+
+    @Autowired
+    private WaterService waterService;
 
 
-	        return "browseFishes";
-	    }
-	
-	
-	   
-	   @GetMapping("/browseWaterList")
-	    public String waterList(Model model) {
-	      
-	    
-	        
-	    	model.addAttribute("waters", waterService.findAll() );
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private TournamentService tournamentService;
+
+    @Autowired
+    private JournalService journalService;
+
+    @GetMapping("/fishInfo")
+    public String getFishInfo(@RequestParam String fish, Model model) {
+        Fish fish1 = fishService.findByName(fish);
+        model.addAttribute("waters", waterService.findAllByFish(fish1));
+        model.addAttribute("fish", fish1);
+        model.addAttribute("comments", commentService.findAllByParentIdAndParentType(fish1.getId(), "fish"));
+        model.addAttribute("comment", new Comment());
+
+        return "fishInfo";
+    }
 
 
-	        return "browseWaters";
-	    }
-	    
-	    @GetMapping("/waterInfo")
-	    public String getWaterInfo(@RequestParam String water,Model model) {
-	      
-	    	  Water water1=waterService.findByName(water);
-	    	    model.addAttribute("fishes",fishService.findAllByWaters(water1));
-		    	model.addAttribute("water", water1);
-		    	model.addAttribute("comments" ,commentService.findAllByParentIdAndParentType(water1.getId(), "water"));
-		      	model.addAttribute("comment" ,new Comment());
-		     
+    @GetMapping("/browseFishList")
+    public String fishList(Model model) {
 
-	    	
-	    	
-	        return "waterInfo";
-	    }
-	   
-	   
-	    @GetMapping("/browseTournaments")
-		 public String getAllTournaments(Model model) {
-		   
-		 	ArrayList<Tournament> tournaments=tournamentService.findAll();
-		 	tournamentService.checkTournamentsExpiration(tournaments);
-		 	model.addAttribute("tournaments", tournaments);
 
-		     return "browseTournaments";
-		 }	
+        model.addAttribute("fishes", fishService.findAll());
 
-		 	
-	    @GetMapping("/test")
-	 		 public String defaultLogin(Model model) {
-	 		  
 
-	    	  return "redirect:/home";
-	 		 }	
-		 
-		 @GetMapping("/tournamentInfo")
-		    public String getTournamentInfo(@RequestParam int tournament,Model model) {
-			 Tournament tour=new Tournament();
-			 try {
-		        tour=tournamentService.findById((long) tournament);
-			 }
-			 catch (Exception ex) {
-		    	
-		    		return "error";
-		    		 }
-		    	model.addAttribute("tournament", tour );
-		    	model.addAttribute("entries",  journalService.getTourneyEntries(tour));
-		    	model.addAttribute("comments" ,commentService.findAllByParentIdAndParentType(tour.getId(), "tournament"));
-		      	model.addAttribute("comment" ,new Comment());
+        return "browseFishes";
+    }
 
-		        return "tournamentInfo";
-		    }
-	   
-	   
-	   
-	   
-	   
-	
-	
+
+    @GetMapping("/browseWaterList")
+    public String waterList(Model model) {
+
+
+        model.addAttribute("waters", waterService.findAll());
+
+
+        return "browseWaters";
+    }
+
+    @GetMapping("/waterInfo")
+    public String getWaterInfo(@RequestParam String water, Model model) {
+
+        Water water1 = waterService.findByName(water);
+        model.addAttribute("fishes", fishService.findAllByWaters(water1));
+        model.addAttribute("water", water1);
+        model.addAttribute("comments", commentService.findAllByParentIdAndParentType(water1.getId(), "water"));
+        model.addAttribute("comment", new Comment());
+
+
+        return "waterInfo";
+    }
+
+
+    @GetMapping("/browseTournaments")
+    public String getAllTournaments(Model model) {
+
+        ArrayList<Tournament> tournaments = tournamentService.findAll();
+        tournamentService.checkTournamentsExpiration(tournaments);
+        model.addAttribute("tournaments", tournaments);
+
+        return "browseTournaments";
+    }
+
+
+    @GetMapping("/test")
+    public String defaultLogin(Model model) {
+
+
+        return "redirect:/home";
+    }
+
+    @GetMapping("/tournamentInfo")
+    public String getTournamentInfo(@RequestParam int tournament, Model model) {
+        Tournament tour = new Tournament();
+        try {
+            tour = tournamentService.findById((long) tournament);
+        } catch (Exception ex) {
+
+            return "error";
+        }
+        model.addAttribute("tournament", tour);
+        model.addAttribute("entries", journalService.getTourneyEntries(tour));
+        model.addAttribute("comments", commentService.findAllByParentIdAndParentType(tour.getId(), "tournament"));
+        model.addAttribute("comment", new Comment());
+
+        return "tournamentInfo";
+    }
+
+
 }

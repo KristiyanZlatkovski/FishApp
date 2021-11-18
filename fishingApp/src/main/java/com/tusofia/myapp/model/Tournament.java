@@ -24,145 +24,143 @@ public class Tournament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String name;
-    
+
     @Column(columnDefinition = "varchar(255) default 'Активен'")
     private String status;
-    
+
     private String hostName;
-    
+
     private String rewardsInfo;
-    
+
     Date startingDate;
-    
+
     Date endDate;
-    
-    @ManyToOne(targetEntity =Fish.class)
+
+    @ManyToOne(targetEntity = Fish.class)
     @Nullable
-   	@JoinColumn(name="fish_id", referencedColumnName = "id")
+    @JoinColumn(name = "fish_id", referencedColumnName = "id")
     private Fish fishes;
-    
-  
-    @ManyToOne(targetEntity =Water.class)
+
+
+    @ManyToOne(targetEntity = Water.class)
     @Nullable
-   	@JoinColumn(name="water_id", referencedColumnName = "id")
+    @JoinColumn(name = "water_id", referencedColumnName = "id")
     private Water waters;
 
-    
-    @OneToMany(mappedBy="tournament", cascade = CascadeType.ALL)
-    private Set<TournamentRewards> rewards=new HashSet<>();
-    
-    
-    
-    
-	public Set<TournamentRewards> getRewards() {
-		return rewards;
-	}
+
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
+    private Set<TournamentRewards> rewards = new HashSet<>();
 
 
-	public void setRewards(Set<TournamentRewards> rewards) {
-		this.rewards = rewards;
-	}
+    public Set<TournamentRewards> getRewards() {
+        return rewards;
+    }
 
 
-	public String getStatus() {
-		return status;
-	}
+    public void setRewards(Set<TournamentRewards> rewards) {
+        this.rewards = rewards;
+    }
 
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
 
-	public Long getId() {
-		return id;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
 
-	public String getHostName() {
-		return hostName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
-	public void setHostName(String hostName) {
-		this.hostName = hostName;
-	}
+    public String getHostName() {
+        return hostName;
+    }
 
 
-	public String getRewardsInfo() {
-		return rewardsInfo;
-	}
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
 
 
-	public void setRewardsInfo(String rewardsInfo) {
-		this.rewardsInfo = rewardsInfo;
-	}
+    public String getRewardsInfo() {
+        return rewardsInfo;
+    }
 
 
-	public Date getStartingDate() {
-		return startingDate;
-	}
+    public void setRewardsInfo(String rewardsInfo) {
+        this.rewardsInfo = rewardsInfo;
+    }
 
 
-	public void setStartingDate(Date startingDate) {
-		this.startingDate = startingDate;
-	}
+    public Date getStartingDate() {
+        return startingDate;
+    }
 
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
+    }
 
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public Date getEndDate() {
+        return endDate;
+    }
 
 
-	public Optional<Fish>  getFishes() {
-	
-	       
-		return Optional.ofNullable(fishes);
-	}
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
 
-	public void setFishes(Fish fishes) {
-		this.fishes = fishes;
-	}
+    public Optional<Fish> getFishes() {
 
 
-	public  Optional<Water> getWaters() {
-		  
-	       
-		return Optional.ofNullable(waters);
-	}
+        return Optional.ofNullable(fishes);
+    }
 
 
-	public void setWaters(Water waters) {
-		this.waters = waters;
-	}
-    
-	 public void addReward(TournamentRewards reward) {
-	        this.rewards.add(reward);
-	        reward.setTournament(this);
-	    }
-    
+    public void setFishes(Fish fishes) {
+        this.fishes = fishes;
+    }
+
+
+    public Optional<Water> getWaters() {
+
+
+        return Optional.ofNullable(waters);
+    }
+
+
+    public void setWaters(Water waters) {
+        this.waters = waters;
+    }
+
+    public void addReward(TournamentRewards reward) {
+        this.rewards.add(reward);
+        reward.setTournament(this);
+    }
+
 
 }

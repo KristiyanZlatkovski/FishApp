@@ -9,14 +9,13 @@ public interface WaterService {
 
 
     Water findByName(String name);
-    
-   
 
-	ArrayList<Water> findAll();
+
+    ArrayList<Water> findAll();
 
     void saveWater(Water water);
 
-	Water findById(Long id);
-	
-	ArrayList<Water> findAllByFish(Fish fish);
+    Water findById(Long id);
+
+    ArrayList<Water> findAllByFish(Fish fish);
 }

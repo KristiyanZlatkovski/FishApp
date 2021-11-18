@@ -11,53 +11,42 @@ import com.tusofia.myapp.model.Water;
 import com.tusofia.myapp.repository.WaterRepository;
 
 
-
 @Service
 public class WaterServiceImpl implements WaterService {
     @Autowired
     private WaterRepository waterRepository;
- 
 
 
-
-	@Override
-	public ArrayList<Water> findAll() {
-		// TODO Auto-generated method stub
-		return waterRepository.findAll();
-	}
-
+    @Override
+    public ArrayList<Water> findAll() {
+        // TODO Auto-generated method stub
+        return waterRepository.findAll();
+    }
 
 
-
-	@Override
-	public Water findByName(String name) {
-		// TODO Auto-generated method stub
-		return waterRepository.findByName(name);
-	}
-
+    @Override
+    public Water findByName(String name) {
+        // TODO Auto-generated method stub
+        return waterRepository.findByName(name);
+    }
 
 
-
-	@Override
-	public Water findById(Long id) {
-		return waterRepository.findById(id).get();
-	}
-
+    @Override
+    public Water findById(Long id) {
+        return waterRepository.findById(id).get();
+    }
 
 
+    @Override
+    public void saveWater(Water water) {
 
-	@Override
-	public void saveWater(Water water) {
-		
-		waterRepository.save(water);
-	}
-
+        waterRepository.save(water);
+    }
 
 
+    @Override
+    public ArrayList<Water> findAllByFish(Fish fish) {
 
-	@Override
-	public ArrayList<Water> findAllByFish(Fish fish) {
-		
-		return waterRepository.findAllByFishes(fish);
-	}
+        return waterRepository.findAllByFishes(fish);
+    }
 }

@@ -13,7 +13,6 @@ import com.tusofia.myapp.repository.RoleRepository;
 import com.tusofia.myapp.repository.UserRepository;
 
 
-
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -29,69 +28,64 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roleRepository.findByName("ROLE_USER"));
         userRepository.save(user);
     }
-    
+
     @Override
     public void saveUpdate(User user) {
-     
+
         userRepository.save(user);
     }
-    
-    
-    
-    
+
 
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-	@Override
-	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
-		 return userRepository.findByEmail(email);
-	}
+    @Override
+    public User findByEmail(String email) {
+        // TODO Auto-generated method stub
+        return userRepository.findByEmail(email);
+    }
 
-	@Override
-	public List<User> findAll() {
-		// TODO Auto-generated method stub
-		return userRepository.findAll();
-	}
+    @Override
+    public List<User> findAll() {
+        // TODO Auto-generated method stub
+        return userRepository.findAll();
+    }
 
-	@Override
-	public void delete(User user) {
-		// TODO Auto-generated method stub
-		userRepository.delete(user);
-	}
+    @Override
+    public void delete(User user) {
+        // TODO Auto-generated method stub
+        userRepository.delete(user);
+    }
 
-	@Override
-	public void deleteById(Long id) {
-		userRepository.deleteById(id);
-		
-	}
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
 
-	@Override
-	public ArrayList<Role> findAllRoles() {
-	
-		return roleRepository.findAll();
-	}
+    }
 
-	@Override
-	public User getById(Long id) {
-	
-		return userRepository.getById(id);
-	}
+    @Override
+    public ArrayList<Role> findAllRoles() {
 
-	@Override
-	public Role findRoleById(Long id) {
-		
-		return  roleRepository.findById(id).get();
-	}
+        return roleRepository.findAll();
+    }
 
-	@Override
-	public void transferUserRecords(Long id) {
-		
-		
-		
-		
-	}
+    @Override
+    public User getById(Long id) {
+
+        return userRepository.getById(id);
+    }
+
+    @Override
+    public Role findRoleById(Long id) {
+
+        return roleRepository.findById(id).get();
+    }
+
+    @Override
+    public void transferUserRecords(Long id) {
+
+
+    }
 }

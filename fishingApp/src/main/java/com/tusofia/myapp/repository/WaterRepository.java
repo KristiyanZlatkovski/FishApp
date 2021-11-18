@@ -9,10 +9,11 @@ import com.tusofia.myapp.model.Fish;
 import com.tusofia.myapp.model.Water;
 
 
-
 public interface WaterRepository extends JpaRepository<Water, Long> {
     Water findByName(String name);
-   ArrayList<Water> findAll();
-   ArrayList<Water> findAllByFishes(Fish fish);
-   
+
+    ArrayList<Water> findAll();
+
+    ArrayList<Water> findAllByFishes(Fish fish);
+
 }
