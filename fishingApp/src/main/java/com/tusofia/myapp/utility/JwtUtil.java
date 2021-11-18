@@ -1,4 +1,4 @@
-package com.tusofia.myapp.web;
+package com.tusofia.myapp.utility;
 
 import java.util.Date;
 import java.util.HashMap;

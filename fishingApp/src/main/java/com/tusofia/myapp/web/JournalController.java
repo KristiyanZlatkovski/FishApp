@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+import com.tusofia.myapp.utility.JournalValidator;
+import com.tusofia.myapp.utility.PictureValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

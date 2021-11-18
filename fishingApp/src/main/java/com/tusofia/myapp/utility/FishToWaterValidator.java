@@ -1,4 +1,4 @@
-package com.tusofia.myapp.web;
+package com.tusofia.myapp.utility;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

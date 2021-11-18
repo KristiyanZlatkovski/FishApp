@@ -3,6 +3,10 @@ package com.tusofia.myapp.web;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.tusofia.myapp.utility.FishProposalValidator;
+import com.tusofia.myapp.utility.FishToWaterValidator;
+import com.tusofia.myapp.utility.PictureValidator;
+import com.tusofia.myapp.utility.WaterProposalValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

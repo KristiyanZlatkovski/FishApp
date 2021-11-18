@@ -8,7 +8,7 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tusofia.myapp.web.FileUploadUtil;
+import com.tusofia.myapp.utility.FileUploadUtil;
 
 @Service
 public class PictureServiceImpl implements PictureService {

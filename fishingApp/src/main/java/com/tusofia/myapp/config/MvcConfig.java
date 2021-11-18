@@ -1,4 +1,4 @@
-package com.tusofia.myapp.web;
+package com.tusofia.myapp.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

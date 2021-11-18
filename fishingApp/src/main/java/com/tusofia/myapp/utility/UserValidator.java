@@ -1,4 +1,4 @@
-package com.tusofia.myapp.web;
+package com.tusofia.myapp.utility;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

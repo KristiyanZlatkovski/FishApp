@@ -1,4 +1,4 @@
-package com.tusofia.myapp;
+package com.tusofia.myapp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
