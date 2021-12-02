@@ -53,11 +53,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    @Override
-    public void delete(User user) {
-        // TODO Auto-generated method stub
-        userRepository.delete(user);
-    }
+
 
     @Override
     public void deleteById(Long id) {
@@ -83,9 +79,5 @@ public class UserServiceImpl implements UserService {
         return roleRepository.findById(id).get();
     }
 
-    @Override
-    public void transferUserRecords(Long id) {
 
-
-    }
 }

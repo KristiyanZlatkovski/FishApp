@@ -9,8 +9,6 @@ import com.tusofia.myapp.model.User;
 public interface UserService {
     void save(User user);
 
-    void delete(User user);
-
     void deleteById(Long id);
 
     User findByUsername(String username);
@@ -27,5 +25,5 @@ public interface UserService {
 
     public void saveUpdate(User user);
 
-    void transferUserRecords(Long id);
+
 }
