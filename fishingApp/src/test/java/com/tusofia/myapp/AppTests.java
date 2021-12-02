@@ -10,9 +10,6 @@ class AppTests {
 
 
 
-
-
-
 	@Test
 	void trueAssumption() {
 		assumeTrue(5 > 1);
